@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Recilic</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1E3A2E;
+      background: #EFF6F2;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+    h1 { font-family: "New York", Georgia, serif; letter-spacing: -0.01em; }
+    h2 { margin-top: 2rem; font-size: 1.2rem; }
+    p, li { color: #3d5c4e; }
+    a { color: #1E5C44; }
+    .updated { color: #5B7268; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <p><a href="/">← Recilic</a></p>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: July 28, 2026</p>
+
+  <p>Recilic is a Mac application that backs up your files across devices
+  you and people you trust own, as an end-to-end encrypted mesh. It is
+  designed so that your data — and the keys to it — never leave your
+  control.</p>
+
+  <h2>Data collection</h2>
+  <p><strong>Recilic collects no data. Period.</strong></p>
+  <ul>
+    <li>No analytics, telemetry, or crash reporting</li>
+    <li>No account, sign-up, or login with Recilic</li>
+    <li>No Recilic servers — the app has no backend of its own</li>
+    <li>No advertising or third-party SDKs</li>
+  </ul>
+
+  <h2>Your files</h2>
+  <p>Recilic reads files only from the folders you explicitly select. Before
+  anything leaves your Mac, it is encrypted locally with keys only you hold,
+  then split into shards. Storage nodes — including your own devices and
+  those of people you invite — receive only encrypted shards. They cannot
+  read your file contents, names, or folder structure. Your files are never
+  routed through, cached on, or visible to any server operated by us.</p>
+
+  <h2>Keys</h2>
+  <p>Encryption keys are generated on your Mac and protected by the macOS
+  Keychain. Your recovery key is shown to you once, for you to store safely;
+  we never see it and cannot reset it. Without your keys, no storage node —
+  and no one else — can decrypt your data.</p>
+
+  <h2>Network access</h2>
+  <p>The only network activity Recilic performs is encrypted communication
+  between the nodes in your own mesh — transferring shards, verifying that
+  nodes still hold them, and repairing lost ones. If you add a cloud
+  location (such as an S3 bucket) as a node, it receives the same encrypted
+  shards and handles them under its own provider's privacy policy.</p>
+
+  <h2>Local settings</h2>
+  <p>Recilic stores its settings (your mesh membership, backup catalog, and
+  verification state) locally on your Mac, inside the app's sandbox
+  container. The catalog replicated to other nodes is encrypted like
+  everything else. Deleting the app removes local settings.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy ever changes, the updated version will be posted at
+  <a href="https://recilic.app/privacy/">recilic.app/privacy</a> with a new
+  "last updated" date.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about privacy? Email
+  <a href="mailto:support@recilic.app">support@recilic.app</a>.</p>
+</body>
+</html>
