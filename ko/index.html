@@ -199,6 +199,22 @@
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
 
+    section.proofs { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .proofs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; text-align: left; }
+    .proof { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem; }
+    .proof .tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent-deep); background: var(--accent-tint);
+      border-radius: 999px; padding: 0.25rem 0.7rem; margin-bottom: 0.8rem;
+    }
+    .proof h3 { font-size: 1.04rem; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
+    .proof p { font-size: 0.94rem; color: var(--muted); }
+    .proof-punchline {
+      max-width: 720px; margin: 2.2rem auto 0; font-size: 1.05rem; color: var(--ink);
+      background: var(--accent-tint); border-radius: 18px; padding: 1.4rem 1.8rem;
+    }
+    .proof-punchline strong { color: var(--accent-deep); }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -237,6 +253,7 @@
     <div class="links">
       <a href="#features">기능</a>
       <a href="#how">작동 방식</a>
+      <a href="#proofs">네 가지 증명</a>
       <a href="#compare">비교</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@recilic.app">지원</a>
@@ -351,6 +368,34 @@
       <div><span class="ok">✓</span> 최근 복원 훈련: 7일 전 통과</div>
       <div><span class="muted">⏱ 최신 검증 백업: 3분 전</span></div>
     </div>
+  </section>
+
+  <section class="proofs" id="proofs">
+    <h2 class="section-title">Recilic이 증명하는 것</h2>
+    <p class="section-sub">"백업 완료"는 주장일 뿐입니다. Recilic은 네 가지 증명으로 그것을 사실로 만듭니다.</p>
+    <div class="proofs-grid">
+      <div class="proof">
+        <span class="tag">Proof 01</span>
+        <h3>보유 증명</h3>
+        <p>Recilic은 각 노드에 정기적으로 챌린지를 보냅니다. 샤드의 실제 바이트가 없으면 정답을 낼 수 없습니다. 챌린지는 일회용이며 특정 노드와 샤드에 묶여 있어, 데이터를 잃은 노드는 허세도, 재사용도, 답 빌리기도 불가능합니다.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 02</span>
+        <h3>복원 가능성 증명</h3>
+        <p>정기 복원 훈련이 파일을 처음부터 끝까지 실제로 재구성합니다 — 샤드 수집, 디코딩, 복호화, 검증까지. 키를 포함한 전체 경로가 살아 있음을 증명합니다. 복원은 가정이 아니라 리허설된 것입니다.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 03</span>
+        <h3>생존성 증명</h3>
+        <p>복원 가능성 리포트는 샤드의 실제 위치에서 계산됩니다: 몇 대의 기기, 심지어 장소 전체를 잃어도 복원할 수 있는지 정확하게. 희망적인 기본값이 아니라 실제 배치에서 도출됩니다.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 04</span>
+        <h3>히스토리 무결성 증명</h3>
+        <p>백업 세대는 불변이고 일련번호가 붙으며 볼트 키에 묶여 있습니다. 어제의 백업을 몰래 고쳐 쓸 수도, 암호화 키를 눈치채지 못하게 바꿔치기할 수도 없습니다.</p>
+      </div>
+    </div>
+    <p class="proof-punchline">대부분의 백업 도구의 체크 표시는 <strong>"전송이 끝났다"</strong>는 뜻입니다. Recilic의 체크는 <strong>"노드가 방금 데이터 보유를 증명했고, 전체 복원이 리허설되었다"</strong>는 뜻입니다.</p>
   </section>
 
   <section class="compare" id="compare">

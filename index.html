@@ -199,6 +199,22 @@
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
 
+    section.proofs { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .proofs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; text-align: left; }
+    .proof { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem; }
+    .proof .tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent-deep); background: var(--accent-tint);
+      border-radius: 999px; padding: 0.25rem 0.7rem; margin-bottom: 0.8rem;
+    }
+    .proof h3 { font-size: 1.04rem; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
+    .proof p { font-size: 0.94rem; color: var(--muted); }
+    .proof-punchline {
+      max-width: 720px; margin: 2.2rem auto 0; font-size: 1.05rem; color: var(--ink);
+      background: var(--accent-tint); border-radius: 18px; padding: 1.4rem 1.8rem;
+    }
+    .proof-punchline strong { color: var(--accent-deep); }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -261,6 +277,7 @@
     <div class="links">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
+      <a href="#proofs">Proofs</a>
       <a href="#compare">Compare</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@recilic.app">Support</a>
@@ -380,6 +397,34 @@
       <div><span class="ok">✓</span> Last restore drill: passed 7 days ago</div>
       <div><span class="muted">⏱ Latest verified backup: 3 minutes ago</span></div>
     </div>
+  </section>
+
+  <section class="proofs" id="proofs">
+    <h2 class="section-title">What Recilic proves</h2>
+    <p class="section-sub">"Backed up" is a claim. Recilic backs it with four kinds of proof.</p>
+    <div class="proofs-grid">
+      <div class="proof">
+        <span class="tag">Proof 01</span>
+        <h3>Possession</h3>
+        <p>Recilic routinely challenges every node to answer with the exact bytes of your shards. Each challenge is single-use and bound to one node and one shard — a node that lost your data can't bluff, replay, or borrow an answer.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 02</span>
+        <h3>Restorability</h3>
+        <p>Scheduled restore drills rebuild your files end to end — gather shards, decode, decrypt, verify — proving the whole chain works, including your keys. Recovery is rehearsed, not assumed.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 03</span>
+        <h3>Survivability</h3>
+        <p>Your recoverability report is computed from where shards actually sit: exactly how many machines — or whole locations — you can lose and still restore. Derived from real placement, not wishful defaults.</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 04</span>
+        <h3>History integrity</h3>
+        <p>Backup generations are immutable, sequence-numbered, and bound to your vault key. Nothing can silently rewrite yesterday's backup — and nobody can swap your encryption key unnoticed.</p>
+      </div>
+    </div>
+    <p class="proof-punchline">Most backup tools' checkmark means <strong>"the transfer finished."</strong> Recilic's means <strong>"your nodes just proved they still hold your data — and a full restore was rehearsed."</strong></p>
   </section>
 
   <section class="compare" id="compare">

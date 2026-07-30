@@ -199,6 +199,22 @@
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
 
+    section.proofs { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .proofs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; text-align: left; }
+    .proof { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem; }
+    .proof .tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent-deep); background: var(--accent-tint);
+      border-radius: 999px; padding: 0.25rem 0.7rem; margin-bottom: 0.8rem;
+    }
+    .proof h3 { font-size: 1.04rem; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
+    .proof p { font-size: 0.94rem; color: var(--muted); }
+    .proof-punchline {
+      max-width: 720px; margin: 2.2rem auto 0; font-size: 1.05rem; color: var(--ink);
+      background: var(--accent-tint); border-radius: 18px; padding: 1.4rem 1.8rem;
+    }
+    .proof-punchline strong { color: var(--accent-deep); }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -237,6 +253,7 @@
     <div class="links">
       <a href="#features">功能特色</a>
       <a href="#how">運作方式</a>
+      <a href="#proofs">四種證明</a>
       <a href="#compare">方案比較</a>
       <a href="#faq">常見問題</a>
       <a href="mailto:support@recilic.app">支援</a>
@@ -351,6 +368,34 @@
       <div><span class="ok">✓</span> 上次還原演練：7 天前通過</div>
       <div><span class="muted">⏱ 最新已驗證備份：3 分鐘前</span></div>
     </div>
+  </section>
+
+  <section class="proofs" id="proofs">
+    <h2 class="section-title">Recilic 證明什麼</h2>
+    <p class="section-sub">「已備份」只是一句宣稱。Recilic 用四種證明把它變成事實。</p>
+    <div class="proofs-grid">
+      <div class="proof">
+        <span class="tag">Proof 01</span>
+        <h3>持有證明</h3>
+        <p>Recilic 定期向每個節點發出挑戰：必須用你分片的真實位元組算出正確答案。每個挑戰單次有效、綁定特定節點與分片——弄丟資料的節點無法虛張聲勢、重放或借用答案。</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 02</span>
+        <h3>可還原證明</h3>
+        <p>定期還原演練把你的檔案端到端真正重建一次——收集分片、解碼、解密、逐一驗證——證明整條鏈（包括你的金鑰）都是活的。還原是演練過的，不是假設的。</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 03</span>
+        <h3>存活能力證明</h3>
+        <p>可還原度報告從分片實際的存放位置計算出來：你可以同時失去幾台機器、甚至整個地點，仍然還原得回來。由真實配置推導，不是一廂情願的預設。</p>
+      </div>
+      <div class="proof">
+        <span class="tag">Proof 04</span>
+        <h3>歷史完整性證明</h3>
+        <p>備份世代不可變、帶單調序號、並綁定你的金鑰。沒有人能悄悄改寫昨天的備份，也沒有人能神不知鬼不覺地偷換你的加密金鑰。</p>
+      </div>
+    </div>
+    <p class="proof-punchline">大多數備份工具的 ✓ 代表<strong>「傳輸完成了」</strong>。Recilic 的 ✓ 代表<strong>「節點剛剛證明了它們仍持有你的資料——而且完整還原已經演練過」</strong>。</p>
   </section>
 
   <section class="compare" id="compare">
