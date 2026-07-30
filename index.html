@@ -285,19 +285,24 @@
           </marker>
         </defs>
         <!-- source -->
-        <rect class="box" x="20" y="110" width="150" height="80" rx="12"/>
-        <text x="95" y="145" text-anchor="middle">Your files</text>
-        <text class="dim" x="95" y="166" text-anchor="middle">Encrypted on your Mac</text>
+        <rect class="box" x="10" y="110" width="132" height="80" rx="12"/>
+        <text x="76" y="145" text-anchor="middle">Your files</text>
+        <text class="dim" x="76" y="166" text-anchor="middle">/data · on your Mac</text>
+        <!-- chunk + encrypt stage -->
+        <rect class="box" x="166" y="110" width="132" height="80" rx="12"/>
+        <text x="232" y="145" text-anchor="middle">Chunk + encrypt</text>
+        <text class="dim" x="232" y="166" text-anchor="middle">Nothing leaves readable</text>
+        <path class="arrow" d="M142 150 L 162 150"/>
         <!-- shard stage -->
-        <rect class="box" x="230" y="110" width="150" height="80" rx="12"/>
-        <text x="305" y="145" text-anchor="middle">4 + 2 shards</text>
-        <text class="dim" x="305" y="166" text-anchor="middle">Erasure-coded ciphertext</text>
-        <path class="arrow" d="M180 150 L 220 150"/>
+        <rect class="box" x="322" y="110" width="132" height="80" rx="12"/>
+        <text x="388" y="145" text-anchor="middle">4 + 2 shards</text>
+        <text class="dim" x="388" y="166" text-anchor="middle">Per chunk · erasure-coded</text>
+        <path class="arrow" d="M298 150 L 318 150"/>
         <!-- arrows to nodes -->
-        <path class="arrow" d="M390 150 C 440 150, 450 40, 490 40"/>
-        <path class="arrow" d="M390 150 C 440 150, 450 113, 490 113"/>
-        <path class="arrow" d="M390 150 C 440 150, 450 187, 490 187"/>
-        <path class="arrow" d="M390 150 C 440 150, 450 260, 490 260"/>
+        <path class="arrow" d="M454 150 C 476 150, 466 40, 490 40"/>
+        <path class="arrow" d="M454 150 C 476 150, 466 113, 490 113"/>
+        <path class="arrow" d="M454 150 C 476 150, 466 187, 490 187"/>
+        <path class="arrow" d="M454 150 C 476 150, 466 260, 490 260"/>
         <!-- nodes -->
         <rect class="box" x="500" y="15" width="200" height="50" rx="12"/>
         <text x="600" y="45" text-anchor="middle">Mac mini · Home</text>
