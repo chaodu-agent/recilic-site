@@ -180,6 +180,25 @@
     .status-demo .ok { color: var(--accent-deep); }
     .status-demo .muted { color: var(--muted); }
 
+    section.compare { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 0.5rem; }
+    table.compare-table {
+      width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      overflow: hidden; text-align: left; font-size: 0.92rem;
+    }
+    .compare-table th, .compare-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .compare-table thead th { background: var(--accent-tint); font-size: 0.95rem; }
+    .compare-table thead th:first-child { width: 17%; }
+    .compare-table tbody th { font-weight: 600; font-size: 0.9rem; }
+    .compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table td { color: var(--muted); }
+    .compare-table td.self { color: var(--ink); }
+    .compare-table .yes { color: var(--accent-deep); font-weight: 700; }
+    .compare-table .meh { color: #b98317; font-weight: 700; }
+    .compare-table .no { color: #c0564f; font-weight: 700; }
+    p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -218,6 +237,7 @@
     <div class="links">
       <a href="#features">機能</a>
       <a href="#how">仕組み</a>
+      <a href="#compare">比較</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@recilic.app">サポート</a>
       <span class="lang"><a href="/zh/">中文</a>|<a class="active" href="/ja/">日本語</a>|<a href="/ko/">한국어</a>|<a href="/?lang=en">EN</a></span>
@@ -327,6 +347,32 @@
       <div><span class="ok">✓</span> 直近の復元訓練：7 日前に成功</div>
       <div><span class="muted">⏱ 最新の検証済みバックアップ：3 分前</span></div>
     </div>
+  </section>
+
+  <section class="compare" id="compare">
+    <h2 class="section-title">他の方法との比較</h2>
+    <p class="section-sub">NASはディスクの故障から守ってくれます。クラウドドライブは家の災害から守ってくれます——すべてを預ける覚悟があれば。Recilicはその両方を、すでに持っているマシンでカバーします。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic メッシュ</th><th scope="col">家庭用 NAS</th><th scope="col">ノートPC + クラウドドライブ</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">火災・盗難・災害</th><td class="self"><span class="yes">✓</span> シャードは複数の場所に分散——拠点ごと失っても復元可能</td><td><span class="no">✕</span> Macのすぐ隣に設置。家ごと被災すればRAIDは無力</td><td><span class="yes">✓</span> データは遠隔のデータセンターに</td></tr>
+          <tr><th scope="row">ディスク・マシンの故障</th><td class="self"><span class="yes">✓</span> 6つのシャードのうち任意の2つを失っても復元、メッシュは自己修復</td><td><span class="meh">△</span> RAIDでディスク1〜2本は耐えるが、NAS本体が単一障害点</td><td><span class="yes">✓</span> 事業者側で冗長化</td></tr>
+          <tr><th scope="row">ランサムウェアと誤削除</th><td class="self"><span class="yes">✓</span> 改変不能な履歴——スナップショットは書き換えられず、任意の時点に戻せる</td><td><span class="meh">△</span> スナップショットは要設定。ネットワーク上のNASは一緒に暗号化されがち</td><td><span class="meh">△</span> 版履歴は約30日。同期は壊れたファイルを忠実にアップロード</td></tr>
+          <tr><th scope="row">プライバシー</th><td class="self"><span class="yes">✓</span> Macを離れる前に暗号化。ノードが持つのは読めない断片だけ</td><td><span class="meh">△</span> データは手元にあるが、本体に触れる人は誰でもデータに触れられる</td><td><span class="no">✕</span> 鍵は事業者が保持し、内容を読める</td></tr>
+          <tr><th scope="row">信頼が必要な相手</th><td class="self"><span class="yes">✓</span> 誰も不要——復元しきい値未満のノードは何も再構成できない</td><td><span class="meh">△</span> 本体にアクセスできる全員</td><td><span class="no">✕</span> 事業者を全面的に信頼</td></tr>
+          <tr><th scope="row">復元できる証明</th><td class="self"><span class="yes">✓</span> 保有証明の監査 + 定期的な復元ドリル</td><td><span class="no">✕</span> 「たぶん大丈夫」——必要になるその日まで</td><td><span class="no">✕</span> 「たぶん大丈夫」——しかもアカウント凍結のリスク</td></tr>
+          <tr><th scope="row">初期費用</th><td class="self"><span class="yes">✓</span> $0——すでに持っている空き容量を活用</td><td><span class="no">✕</span> 本体とディスクで $300〜1000 以上</td><td><span class="yes">✓</span> $0</td></tr>
+          <tr><th scope="row">月額費用</th><td class="self"><span class="yes">✓</span> なし</td><td><span class="yes">✓</span> 電気代のみ</td><td><span class="no">✕</span> 2 TBで月額約$10——永久に、容量とともに増加</td></tr>
+          <tr><th scope="row">大容量ライブラリの初回バックアップ</th><td class="self"><span class="yes">✓</span> LAN速度</td><td><span class="yes">✓</span> LAN速度</td><td><span class="no">✕</span> 1 TB超は家庭の上り回線で数日がかり</td></tr>
+          <tr><th scope="row">メンテナンス</th><td class="self"><span class="yes">✓</span> 自己修復し、復元可能性を正直にレポート</td><td><span class="no">✕</span> ファームウェア更新、RAIDスクラブ、ディスク交換——もはや趣味</td><td><span class="yes">✓</span> ゼロ</td></tr>
+          <tr><th scope="row">第三者への依存</th><td class="self"><span class="yes">✓</span> なし——あなたのマシン、あなたの鍵</td><td><span class="yes">✓</span> なし</td><td><span class="no">✕</span> 値上げ、規約変更、ポリシー、アカウント凍結</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Recilicは同期ツールでもTime Machineの代替でもありません——昨日のファイルへの素早いロールバックにはTime Machineをどうぞ。Recilicが加えるのは、それらにできない層：遠隔地・エンドツーエンド暗号化・検証済みの災害復旧を、すでに持っているハードウェアの上で。</p>
   </section>
 
   <section class="faq" id="faq">

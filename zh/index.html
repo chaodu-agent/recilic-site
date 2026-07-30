@@ -180,6 +180,25 @@
     .status-demo .ok { color: var(--accent-deep); }
     .status-demo .muted { color: var(--muted); }
 
+    section.compare { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 0.5rem; }
+    table.compare-table {
+      width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      overflow: hidden; text-align: left; font-size: 0.92rem;
+    }
+    .compare-table th, .compare-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .compare-table thead th { background: var(--accent-tint); font-size: 0.95rem; }
+    .compare-table thead th:first-child { width: 17%; }
+    .compare-table tbody th { font-weight: 600; font-size: 0.9rem; }
+    .compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table td { color: var(--muted); }
+    .compare-table td.self { color: var(--ink); }
+    .compare-table .yes { color: var(--accent-deep); font-weight: 700; }
+    .compare-table .meh { color: #b98317; font-weight: 700; }
+    .compare-table .no { color: #c0564f; font-weight: 700; }
+    p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -218,6 +237,7 @@
     <div class="links">
       <a href="#features">功能特色</a>
       <a href="#how">運作方式</a>
+      <a href="#compare">方案比較</a>
       <a href="#faq">常見問題</a>
       <a href="mailto:support@recilic.app">支援</a>
       <span class="lang"><a class="active" href="/zh/">中文</a>|<a href="/ja/">日本語</a>|<a href="/ko/">한국어</a>|<a href="/?lang=en">EN</a></span>
@@ -327,6 +347,32 @@
       <div><span class="ok">✓</span> 上次還原演練：7 天前通過</div>
       <div><span class="muted">⏱ 最新已驗證備份：3 分鐘前</span></div>
     </div>
+  </section>
+
+  <section class="compare" id="compare">
+    <h2 class="section-title">跟其他方案比一比</h2>
+    <p class="section-sub">NAS 保護你不怕硬碟壞掉；雲端硬碟保護你不怕房子出事——前提是你把一切都交給它。Recilic 兩者都顧，而且用的是你已經擁有的機器。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic 備份網</th><th scope="col">家用 NAS</th><th scope="col">筆電 + 雲端硬碟</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">火災、失竊、天災</th><td class="self"><span class="yes">✓</span> 分片分散在不同地點——整個地點全毀也能還原</td><td><span class="no">✕</span> NAS 就放在 Mac 旁邊；房子出事時 RAID 幫不上忙</td><td><span class="yes">✓</span> 資料在異地的資料中心</td></tr>
+          <tr><th scope="row">硬碟或機器故障</th><td class="self"><span class="yes">✓</span> 6 個分片中任 2 個消失都能還原，網格自我修復</td><td><span class="meh">△</span> RAID 撐得住 1–2 顆硬碟，但 NAS 主機本身是單點故障</td><td><span class="yes">✓</span> 服務商端有冗餘</td></tr>
+          <tr><th scope="row">勒索軟體與誤刪</th><td class="self"><span class="yes">✓</span> 不可變的歷史——快照無法被改寫，可回到任何時間點</td><td><span class="meh">△</span> 快照要自己設定；掛在網路上的 NAS 常被勒索軟體一起加密</td><td><span class="meh">△</span> 版本約保留 30 天；同步會忠實把壞掉的檔案傳上去</td></tr>
+          <tr><th scope="row">隱私</th><td class="self"><span class="yes">✓</span> 離開你的 Mac 前已加密；節點只持有無法讀取的碎片</td><td><span class="meh">△</span> 資料在自己手上——但碰得到機器的人就碰得到資料</td><td><span class="no">✕</span> 服務商持有金鑰，能讀取你的內容</td></tr>
+          <tr><th scope="row">需要信任誰</th><td class="self"><span class="yes">✓</span> 不需要任何人——低於還原門檻的節點什麼都拼不出來</td><td><span class="meh">△</span> 所有碰得到機器的人</td><td><span class="no">✕</span> 完全信任服務商</td></tr>
+          <tr><th scope="row">證明還原得回來</th><td class="self"><span class="yes">✓</span> 持有證明稽核 + 定期還原演練</td><td><span class="no">✕</span> 只能假設沒問題——直到需要的那天</td><td><span class="no">✕</span> 只能假設——帳號還可能被鎖</td></tr>
+          <tr><th scope="row">前期成本</th><td class="self"><span class="yes">✓</span> $0——用你已經擁有的閒置空間</td><td><span class="no">✕</span> 主機加硬碟 $300–1000 起跳</td><td><span class="yes">✓</span> $0</td></tr>
+          <tr><th scope="row">每月費用</th><td class="self"><span class="yes">✓</span> 無</td><td><span class="yes">✓</span> 只有電費</td><td><span class="no">✕</span> 2 TB 約 $10/月——永遠付下去，越大越貴</td></tr>
+          <tr><th scope="row">大型資料庫首次備份</th><td class="self"><span class="yes">✓</span> 區網速度</td><td><span class="yes">✓</span> 區網速度</td><td><span class="no">✕</span> 1 TB 以上得靠家用上傳頻寬跑好幾天</td></tr>
+          <tr><th scope="row">維運負擔</th><td class="self"><span class="yes">✓</span> 自我修復，並誠實回報可還原程度</td><td><span class="no">✕</span> 韌體更新、RAID 巡檢、換硬碟——像養寵物</td><td><span class="yes">✓</span> 零維運</td></tr>
+          <tr><th scope="row">依賴第三方</th><td class="self"><span class="yes">✓</span> 無——你的機器、你的金鑰</td><td><span class="yes">✓</span> 無</td><td><span class="no">✕</span> 漲價、改條款、政策變動、帳號誤封</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Recilic 不是同步工具，也不是要取代 Time Machine——快速回滾昨天的檔案，Time Machine 依然好用。Recilic 補上的是它們做不到的那一層：異地、端到端加密、經過驗證的災難復原，跑在你已經擁有的硬體上。</p>
   </section>
 
   <section class="faq" id="faq">

@@ -180,6 +180,25 @@
     .status-demo .ok { color: var(--accent-deep); }
     .status-demo .muted { color: var(--muted); }
 
+    section.compare { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 0.5rem; }
+    table.compare-table {
+      width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      overflow: hidden; text-align: left; font-size: 0.92rem;
+    }
+    .compare-table th, .compare-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .compare-table thead th { background: var(--accent-tint); font-size: 0.95rem; }
+    .compare-table thead th:first-child { width: 17%; }
+    .compare-table tbody th { font-weight: 600; font-size: 0.9rem; }
+    .compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table td { color: var(--muted); }
+    .compare-table td.self { color: var(--ink); }
+    .compare-table .yes { color: var(--accent-deep); font-weight: 700; }
+    .compare-table .meh { color: #b98317; font-weight: 700; }
+    .compare-table .no { color: #c0564f; font-weight: 700; }
+    p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -218,6 +237,7 @@
     <div class="links">
       <a href="#features">기능</a>
       <a href="#how">작동 방식</a>
+      <a href="#compare">비교</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@recilic.app">지원</a>
       <span class="lang"><a href="/zh/">中文</a>|<a href="/ja/">日本語</a>|<a class="active" href="/ko/">한국어</a>|<a href="/?lang=en">EN</a></span>
@@ -327,6 +347,32 @@
       <div><span class="ok">✓</span> 최근 복원 훈련: 7일 전 통과</div>
       <div><span class="muted">⏱ 최신 검증 백업: 3분 전</span></div>
     </div>
+  </section>
+
+  <section class="compare" id="compare">
+    <h2 class="section-title">다른 방식과의 비교</h2>
+    <p class="section-sub">NAS는 디스크 고장으로부터 지켜줍니다. 클라우드 드라이브는 집에 생긴 재해로부터 지켜줍니다 — 모든 것을 맡길 수 있다면요. Recilic은 이미 가진 기기로 둘 다 해결합니다.</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic 메시</th><th scope="col">가정용 NAS</th><th scope="col">노트북 + 클라우드 드라이브</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">화재·도난·재해</th><td class="self"><span class="yes">✓</span> 샤드가 여러 장소에 분산 — 한 장소를 통째로 잃어도 복원 가능</td><td><span class="no">✕</span> Mac 바로 옆에 놓임. 집이 무사하지 않으면 RAID도 소용없음</td><td><span class="yes">✓</span> 데이터가 원격 데이터센터에 보관</td></tr>
+          <tr><th scope="row">디스크·기기 고장</th><td class="self"><span class="yes">✓</span> 6개 샤드 중 어떤 2개가 사라져도 복원, 메시가 자가 복구</td><td><span class="meh">△</span> RAID는 디스크 1–2개까지 버티지만 NAS 본체가 단일 장애점</td><td><span class="yes">✓</span> 사업자 측 이중화</td></tr>
+          <tr><th scope="row">랜섬웨어·실수로 삭제</th><td class="self"><span class="yes">✓</span> 불변 히스토리 — 스냅샷은 덮어쓸 수 없고 어느 시점으로든 롤백</td><td><span class="meh">△</span> 스냅샷은 직접 설정해야 하고, 네트워크에 연결된 NAS는 함께 암호화되기 일쑤</td><td><span class="meh">△</span> 버전 보관 약 30일. 동기화는 손상된 파일도 충실히 업로드</td></tr>
+          <tr><th scope="row">프라이버시</th><td class="self"><span class="yes">✓</span> Mac을 떠나기 전에 암호화. 노드는 읽을 수 없는 조각만 보관</td><td><span class="meh">△</span> 데이터는 내 손에 — 하지만 기기에 접근하는 사람은 데이터에도 접근</td><td><span class="no">✕</span> 사업자가 키를 보유하고 내용을 읽을 수 있음</td></tr>
+          <tr><th scope="row">신뢰해야 하는 대상</th><td class="self"><span class="yes">✓</span> 아무도 없음 — 복원 임계값 미만의 노드는 아무것도 재구성 못 함</td><td><span class="meh">△</span> 기기에 접근 가능한 모든 사람</td><td><span class="no">✕</span> 사업자를 전적으로 신뢰</td></tr>
+          <tr><th scope="row">복원 가능 증명</th><td class="self"><span class="yes">✓</span> 보유 증명 감사 + 정기 복원 훈련</td><td><span class="no">✕</span> 필요한 그날까지 그저 가정</td><td><span class="no">✕</span> 그저 가정 — 게다가 계정 잠금 위험</td></tr>
+          <tr><th scope="row">초기 비용</th><td class="self"><span class="yes">✓</span> $0 — 이미 가진 여유 공간 활용</td><td><span class="no">✕</span> 본체와 디스크에 $300–1000 이상</td><td><span class="yes">✓</span> $0</td></tr>
+          <tr><th scope="row">월 요금</th><td class="self"><span class="yes">✓</span> 없음</td><td><span class="yes">✓</span> 전기료뿐</td><td><span class="no">✕</span> 2 TB에 월 약 $10 — 영원히, 용량이 늘수록 더 비싸게</td></tr>
+          <tr><th scope="row">대용량 라이브러리 첫 백업</th><td class="self"><span class="yes">✓</span> LAN 속도</td><td><span class="yes">✓</span> LAN 속도</td><td><span class="no">✕</span> 1 TB 이상은 가정용 업로드 회선으로 며칠씩</td></tr>
+          <tr><th scope="row">유지 관리</th><td class="self"><span class="yes">✓</span> 자가 복구, 복원 가능성을 정직하게 보고</td><td><span class="no">✕</span> 펌웨어 패치, RAID 점검, 디스크 교체 — 거의 취미 생활</td><td><span class="yes">✓</span> 제로</td></tr>
+          <tr><th scope="row">제3자 의존</th><td class="self"><span class="yes">✓</span> 없음 — 내 기기, 내 키</td><td><span class="yes">✓</span> 없음</td><td><span class="no">✕</span> 가격 인상, 약관 변경, 정책, 계정 정지</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Recilic은 동기화 도구도, Time Machine의 대체재도 아닙니다 — 어제 파일로 빠르게 되돌리는 건 Time Machine에 맡기세요. Recilic이 더하는 것은 그들이 못 하는 층입니다: 이미 가진 하드웨어 위에서 돌아가는 원격지·종단간 암호화·검증된 재해 복구.</p>
   </section>
 
   <section class="faq" id="faq">

@@ -180,6 +180,25 @@
     .status-demo .ok { color: var(--accent-deep); }
     .status-demo .muted { color: var(--muted); }
 
+    section.compare { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
+    .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 0.5rem; }
+    table.compare-table {
+      width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      overflow: hidden; text-align: left; font-size: 0.92rem;
+    }
+    .compare-table th, .compare-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .compare-table thead th { background: var(--accent-tint); font-size: 0.95rem; }
+    .compare-table thead th:first-child { width: 17%; }
+    .compare-table tbody th { font-weight: 600; font-size: 0.9rem; }
+    .compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table td { color: var(--muted); }
+    .compare-table td.self { color: var(--ink); }
+    .compare-table .yes { color: var(--accent-deep); font-weight: 700; }
+    .compare-table .meh { color: #b98317; font-weight: 700; }
+    .compare-table .no { color: #c0564f; font-weight: 700; }
+    p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+
     section.faq { max-width: 720px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
     .faq details {
       border-bottom: 1px solid var(--border);
@@ -242,6 +261,7 @@
     <div class="links">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
+      <a href="#compare">Compare</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@recilic.app">Support</a>
       <span class="lang"><a href="/zh/">中文</a>|<a href="/ja/">日本語</a>|<a href="/ko/">한국어</a>|<a class="active" href="/">EN</a></span>
@@ -355,6 +375,32 @@
       <div><span class="ok">✓</span> Last restore drill: passed 7 days ago</div>
       <div><span class="muted">⏱ Latest verified backup: 3 minutes ago</span></div>
     </div>
+  </section>
+
+  <section class="compare" id="compare">
+    <h2 class="section-title">How it compares</h2>
+    <p class="section-sub">A NAS protects you from a dead disk. A cloud drive protects you from a dead house — if you trust it with everything. Recilic covers both, with machines you already own.</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic mesh</th><th scope="col">Home NAS</th><th scope="col">Laptop + cloud drive</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Fire, theft, disaster</th><td class="self"><span class="yes">✓</span> Shards spread across locations — lose a whole site, restore anyway</td><td><span class="no">✕</span> Sits next to your Mac; RAID doesn't help when the house does</td><td><span class="yes">✓</span> Data lives off-site in a data center</td></tr>
+          <tr><th scope="row">Drive or machine failure</th><td class="self"><span class="yes">✓</span> Any 2 of 6 shards can vanish; the mesh self-heals</td><td><span class="meh">△</span> RAID survives 1–2 disks, but the NAS box itself is a single point</td><td><span class="yes">✓</span> Provider-side redundancy</td></tr>
+          <tr><th scope="row">Ransomware &amp; slipped fingers</th><td class="self"><span class="yes">✓</span> Immutable history — snapshots can't be rewritten; roll back to any point</td><td><span class="meh">△</span> Snapshots only if configured; a network-mounted NAS often gets encrypted too</td><td><span class="meh">△</span> ~30-day versions; sync faithfully uploads the damage</td></tr>
+          <tr><th scope="row">Privacy</th><td class="self"><span class="yes">✓</span> Encrypted before leaving your Mac; nodes hold unreadable fragments</td><td><span class="meh">△</span> Yours — but whoever reaches the box reaches the data</td><td><span class="no">✕</span> Provider holds the keys and can read contents</td></tr>
+          <tr><th scope="row">Who you must trust</th><td class="self"><span class="yes">✓</span> Nobody — below the recovery threshold, nodes reconstruct nothing</td><td><span class="meh">△</span> Everyone with access to the box</td><td><span class="no">✕</span> The provider, entirely</td></tr>
+          <tr><th scope="row">Proof restores work</th><td class="self"><span class="yes">✓</span> Possession audits + scheduled restore drills</td><td><span class="no">✕</span> Assumed — until the day you need it</td><td><span class="no">✕</span> Assumed — and accounts get locked</td></tr>
+          <tr><th scope="row">Upfront cost</th><td class="self"><span class="yes">✓</span> $0 — space you already own</td><td><span class="no">✕</span> $300–1000+ for the box and disks</td><td><span class="yes">✓</span> $0</td></tr>
+          <tr><th scope="row">Monthly fees</th><td class="self"><span class="yes">✓</span> None</td><td><span class="yes">✓</span> Electricity</td><td><span class="no">✕</span> ~$10/mo for 2 TB — forever, and rising with size</td></tr>
+          <tr><th scope="row">First backup of a big library</th><td class="self"><span class="yes">✓</span> LAN speed</td><td><span class="yes">✓</span> LAN speed</td><td><span class="no">✕</span> Days over home upstream for 1 TB+</td></tr>
+          <tr><th scope="row">Maintenance</th><td class="self"><span class="yes">✓</span> Self-healing, with an honest recoverability report</td><td><span class="no">✕</span> Firmware patches, RAID scrubs, disk swaps — a hobby</td><td><span class="yes">✓</span> Zero</td></tr>
+          <tr><th scope="row">Third-party dependence</th><td class="self"><span class="yes">✓</span> None — your machines, your keys</td><td><span class="yes">✓</span> None</td><td><span class="no">✕</span> Pricing, terms, policies, account bans</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Recilic isn't a sync tool or a Time Machine replacement — keep Time Machine for quick local rollbacks. Recilic adds the layer they can't: off-site, end-to-end encrypted, verified disaster recovery on hardware you already own.</p>
   </section>
 
   <section class="faq" id="faq">
