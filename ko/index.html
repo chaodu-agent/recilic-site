@@ -198,6 +198,7 @@
     .compare-table .meh { color: #b98317; font-weight: 700; }
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+    h3.compare-subhead { font-size: 1.35rem; letter-spacing: -0.01em; margin: 3.5rem 0 0.4rem; }
 
     section.proofs { max-width: 880px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
     .proofs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; text-align: left; }
@@ -423,6 +424,28 @@
       </table>
     </div>
     <p class="compare-note">Recilic은 동기화 도구도, Time Machine의 대체재도 아닙니다 — 어제 파일로 빠르게 되돌리는 건 Time Machine에 맡기세요. Recilic이 더하는 것은 그들이 못 하는 층입니다: 이미 가진 하드웨어 위에서 돌아가는 원격지·종단간 암호화·검증된 재해 복구.</p>
+
+    <h3 class="compare-subhead">기술파를 위해: Recilic vs. Kopia</h3>
+    <p class="section-sub">Kopia는 “신뢰하는 백엔드에 스냅샷을 효율적으로 보내는 법”에 답합니다. Recilic은 “신뢰할 백엔드 없이 내구성 있고 검증된 스토리지를 얻는 법”에 답합니다.</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">Kopia(+ 내 백엔드)</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">스토리지 모델</th><td class="self"><span class="yes">✓</span> 내 기기들로 구성한 메시 — 각 청크를 4+2 이레이저 코딩으로 여러 기기·여러 장소에 분산</td><td>직접 마련한 백엔드(S3, B2, SFTP, 디스크) 위의 단일 리포지토리. 이중화는 백엔드의 몫</td></tr>
+          <tr><th scope="row">스토리지 장애</th><td class="self"><span class="yes">✓</span> 6개 샤드 중 어느 2개를 잃어도 복원. 죽은 노드는 생존자로부터 재구축</td><td><span class="no">✕</span> 리포지토리가 단일 장애점 — blob을 잃으면 복원에 구멍. 원격지는 두 번째 리포지토리를 직접 유지</td></tr>
+          <tr><th scope="row">신뢰</th><td class="self"><span class="yes">✓</span> 어떤 단일 주체도 재구성에 충분한 조각을 갖지 못함 — 데이터를 인질로 잡을 수도 없음</td><td><span class="meh">△</span> 클라이언트 측 암호화지만, 암호문 100%가 한곳에 모여 있고 통째로 삭제될 수 있음</td></tr>
+          <tr><th scope="row">검증</th><td class="self"><span class="yes">✓</span> 내장 보유 감사(일회용 챌린지) + 자동 복원 훈련</td><td><span class="meh">△</span> <code>kopia snapshot verify</code> — 직접 스케줄링. 검증 = 데이터를 다시 읽어오는 것</td></tr>
+          <tr><th scope="row">자가 복구</th><td class="self"><span class="yes">✓</span> 생존 샤드 아무 4개로 결손을 자동 재구축</td><td><span class="meh">△</span> 선택형 ECC는 비트 플립만 방어. 잃어버린 blob은 재생 불가</td></tr>
+          <tr><th scope="row">생존성 가시화</th><td class="self"><span class="yes">✓</span> 실제 배치로부터 몇 대·몇 곳까지 잃어도 되는지 계산</td><td><span class="no">✕</span> 해당 개념 없음 — 백엔드는 하나</td></tr>
+          <tr><th scope="row">중복 제거·압축</th><td class="self"><span class="meh">△</span> 아직 기초적(고정 크기 청크)</td><td><span class="yes">✓</span> 강점 — 내용 정의 청킹, 압축, 기기 간 중복 제거</td></tr>
+          <tr><th scope="row">대상 사용자</th><td class="self">인프라 운영을 원치 않는 사람을 위한 Mac 앱</td><td>인프라 운영을 즐기는 사람을 위한 크로스 플랫폼 CLI/UI</td></tr>
+          <tr><th scope="row">비용</th><td class="self">앱 구매 + 스토리지 $0(이미 가진 기기)</td><td>무료 오픈소스 + 백엔드 비용(클라우드 요금 또는 자체 하드웨어)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Kopia는 자기 영역에서 매우 훌륭합니다 — 이미 신뢰하는 스토리지 백엔드가 있고 리포지토리·보존 정책·검증 스케줄 유지를 즐긴다면 좋은 선택입니다. Recilic은 애초에 “신뢰해야 할 백엔드”를 원하지 않는 사람들을 위해 존재합니다. Recilic에 가장 가까운 Kopia 구성은 “Kopia + 오브젝트 락 + 두 번째 원격 리포지토리 + 정기 검증 + 모니터링” — 전부 직접 조립하고 유지하는 것입니다.</p>
   </section>
 
   <section class="faq" id="faq">

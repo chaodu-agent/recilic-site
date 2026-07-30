@@ -198,6 +198,7 @@
     .compare-table .meh { color: #b98317; font-weight: 700; }
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+    h3.compare-subhead { font-size: 1.35rem; letter-spacing: -0.01em; margin: 3.5rem 0 0.4rem; }
 
     section.proofs { max-width: 880px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
     .proofs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; text-align: left; }
@@ -423,6 +424,28 @@
       </table>
     </div>
     <p class="compare-note">Recilicは同期ツールでもTime Machineの代替でもありません——昨日のファイルへの素早いロールバックにはTime Machineをどうぞ。Recilicが加えるのは、それらにできない層：遠隔地・エンドツーエンド暗号化・検証済みの災害復旧を、すでに持っているハードウェアの上で。</p>
+
+    <h3 class="compare-subhead">技術者向け：Recilic vs. Kopia</h3>
+    <p class="section-sub">Kopia が答えるのは「信頼するバックエンドへ効率よくスナップショットを送るには」。Recilic が答えるのは「信頼すべきバックエンドなしで、耐久性のある検証済みストレージを得るには」。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">Kopia（+ あなたのバックエンド）</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">ストレージモデル</th><td class="self"><span class="yes">✓</span> 自分のマシンで組むメッシュ——各チャンクを 4+2 の消失訂正符号で複数マシン・複数拠点に分散</td><td>あなたが用意するバックエンド（S3、B2、SFTP、ディスク）上の単一リポジトリ。冗長性はバックエンドの責任</td></tr>
+          <tr><th scope="row">ストレージ側の障害</th><td class="self"><span class="yes">✓</span> 6 シャード中どの 2 つを失っても復元。死んだノードは生存者から再構築</td><td><span class="no">✕</span> リポジトリは単一障害点——blob を失えば復元に穴。遠隔地対策は自分で第2リポジトリを維持</td></tr>
+          <tr><th scope="row">信頼</th><td class="self"><span class="yes">✓</span> どの単一主体も再構成に足る断片を持たない——データを人質にも取れない</td><td><span class="meh">△</span> クライアント側暗号化だが、暗号文の100%が一箇所に集中し、丸ごと削除されうる</td></tr>
+          <tr><th scope="row">検証</th><td class="self"><span class="yes">✓</span> 内蔵の保有監査（使い捨てチャレンジ）+ 自動復元ドリル</td><td><span class="meh">△</span> <code>kopia snapshot verify</code>——自分でスケジュール。検証 = データを読み戻すこと</td></tr>
+          <tr><th scope="row">自己修復</th><td class="self"><span class="yes">✓</span> 任意の 4 つの生存シャードから欠損を自動再構築</td><td><span class="meh">△</span> オプションの ECC はビット反転のみ防御。失われた blob は再生不能</td></tr>
+          <tr><th scope="row">生存性の可視化</th><td class="self"><span class="yes">✓</span> 実配置から「何台・何拠点まで失えるか」を算出</td><td><span class="no">✕</span> 相当機能なし——バックエンドは1つ</td></tr>
+          <tr><th scope="row">重複排除・圧縮</th><td class="self"><span class="meh">△</span> 現状は初歩的（固定長チャンク）</td><td><span class="yes">✓</span> 得意分野——内容定義チャンキング、圧縮、マシン横断の重複排除</td></tr>
+          <tr><th scope="row">想定ユーザー</th><td class="self">インフラ運用をしたくない人のための Mac アプリ</td><td>インフラ運用を楽しめる人のためのクロスプラットフォーム CLI/UI</td></tr>
+          <tr><th scope="row">費用</th><td class="self">アプリ購入 + ストレージは $0（既に持つマシン）</td><td>無料 OSS + バックエンド費用（クラウド料金または自前ハードウェア）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Kopia はその領域で非常に優秀です——すでに信頼するバックエンドがあり、リポジトリ・保持ポリシー・検証スケジュールの維持を楽しめるなら、素晴らしい選択肢。Recilic は「そもそも信頼すべきバックエンドを持ちたくない」人のために存在します。Recilic に最も近い Kopia 構成は「Kopia + オブジェクトロック + 第2の遠隔リポジトリ + 定期検証 + 監視」——すべて自分で組んで維持するもの。</p>
   </section>
 
   <section class="faq" id="faq">

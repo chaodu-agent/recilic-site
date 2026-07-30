@@ -198,6 +198,7 @@
     .compare-table .meh { color: #b98317; font-weight: 700; }
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+    h3.compare-subhead { font-size: 1.35rem; letter-spacing: -0.01em; margin: 3.5rem 0 0.4rem; }
 
     section.proofs { max-width: 880px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
     .proofs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; text-align: left; }
@@ -452,6 +453,28 @@
       </table>
     </div>
     <p class="compare-note">Recilic isn't a sync tool or a Time Machine replacement — keep Time Machine for quick local rollbacks. Recilic adds the layer they can't: off-site, end-to-end encrypted, verified disaster recovery on hardware you already own.</p>
+
+    <h3 class="compare-subhead">For the technically inclined: Recilic vs. Kopia</h3>
+    <p class="section-sub">Kopia answers “how do I snapshot efficiently into a backend I trust.” Recilic answers “how do I get durable, verified storage without a backend to trust.”</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">Kopia (+ your backend)</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Storage model</th><td class="self"><span class="yes">✓</span> A mesh of machines you own — every chunk erasure-coded 4+2 across nodes and locations</td><td>One repository on a backend you provide (S3, B2, SFTP, a disk); redundancy is the backend’s job</td></tr>
+          <tr><th scope="row">Losing storage</th><td class="self"><span class="yes">✓</span> Any 2 of 6 shards can vanish; dead nodes are rebuilt from survivors</td><td><span class="no">✕</span> The repo is a single point — lost blobs mean holes in restores; off-site means maintaining a second repo yourself</td></tr>
+          <tr><th scope="row">Trust</th><td class="self"><span class="yes">✓</span> No single party holds enough fragments to reconstruct — or to hold your data hostage</td><td><span class="meh">△</span> Client-side encrypted, but one place holds 100% of the ciphertext and can delete it</td></tr>
+          <tr><th scope="row">Verification</th><td class="self"><span class="yes">✓</span> Built-in possession audits (single-use challenges) + automated restore drills</td><td><span class="meh">△</span> <code>kopia snapshot verify</code> — schedule it yourself; verifying means reading data back</td></tr>
+          <tr><th scope="row">Self-healing</th><td class="self"><span class="yes">✓</span> Rebuilds lost shards from any 4 survivors, automatically</td><td><span class="meh">△</span> Optional ECC guards bit flips; lost blobs can’t be regenerated</td></tr>
+          <tr><th scope="row">Survivability insight</th><td class="self"><span class="yes">✓</span> Report computed from real placement: how many machines or locations you can lose</td><td><span class="no">✕</span> No equivalent — there is one backend</td></tr>
+          <tr><th scope="row">Dedup &amp; compression</th><td class="self"><span class="meh">△</span> Basic today (fixed-size chunks)</td><td><span class="yes">✓</span> Excellent — content-defined chunking, compression, cross-machine dedup</td></tr>
+          <tr><th scope="row">Audience</th><td class="self">A Mac app for people who don’t want to run infrastructure</td><td>Cross-platform CLI/UI for people who enjoy running infrastructure</td></tr>
+          <tr><th scope="row">Cost</th><td class="self">App + $0 storage on machines you already own</td><td>Free open source + backend costs (cloud fees or your hardware)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Kopia is excellent at what it does — if you already trust a storage backend and enjoy maintaining repos, retention policies, and verification schedules, it’s a great choice. Recilic exists for everyone who doesn’t want a backend to trust in the first place. The closest Kopia equivalent to Recilic is “Kopia + object lock + a second off-site repo + scheduled verifies + monitoring” — assembled and maintained by you.</p>
   </section>
 
   <section class="faq" id="faq">

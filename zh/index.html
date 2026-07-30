@@ -198,6 +198,7 @@
     .compare-table .meh { color: #b98317; font-weight: 700; }
     .compare-table .no { color: #c0564f; font-weight: 700; }
     p.compare-note { color: var(--muted); font-size: 0.88rem; max-width: 640px; margin: 1.4rem auto 0; }
+    h3.compare-subhead { font-size: 1.35rem; letter-spacing: -0.01em; margin: 3.5rem 0 0.4rem; }
 
     section.proofs { max-width: 880px; margin: 0 auto; padding: 4.5rem 1.5rem 1rem; text-align: center; }
     .proofs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; text-align: left; }
@@ -423,6 +424,28 @@
       </table>
     </div>
     <p class="compare-note">Recilic 不是同步工具，也不是要取代 Time Machine——快速回滾昨天的檔案，Time Machine 依然好用。Recilic 補上的是它們做不到的那一層：異地、端到端加密、經過驗證的災難復原，跑在你已經擁有的硬體上。</p>
+
+    <h3 class="compare-subhead">給技術派：Recilic vs. Kopia</h3>
+    <p class="section-sub">Kopia 回答的是「怎麼有效率地把快照放進我信任的後端」；Recilic 回答的是「怎麼在不需要信任任何後端的情況下，得到耐久且經過驗證的儲存」。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">Kopia（+ 你的後端）</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">儲存模型</th><td class="self"><span class="yes">✓</span> 你自己機器組成的網格——每個區塊 4+2 糾刪碼分散到多台機器、多個地點</td><td>單一 repository 放在你提供的後端（S3、B2、SFTP、硬碟）；冗餘是後端的責任</td></tr>
+          <tr><th scope="row">儲存端出事</th><td class="self"><span class="yes">✓</span> 6 個分片任 2 個消失照樣還原；死掉的節點從倖存者重建</td><td><span class="no">✕</span> Repo 是單點——後端弄丟 blob，還原就有缺洞；異地 = 自己維護第二個 repo</td></tr>
+          <tr><th scope="row">信任</th><td class="self"><span class="yes">✓</span> 沒有任何一方持有足夠碎片能重建——或挾持你的資料</td><td><span class="meh">△</span> 客戶端加密，但密文 100% 集中一處，對方可以整份刪除</td></tr>
+          <tr><th scope="row">驗證</th><td class="self"><span class="yes">✓</span> 內建持有稽核（單次挑戰）+ 自動還原演練</td><td><span class="meh">△</span> <code>kopia snapshot verify</code>——自己排程；驗證 = 把資料讀回來</td></tr>
+          <tr><th scope="row">自我修復</th><td class="self"><span class="yes">✓</span> 從任 4 個倖存分片自動重建缺損</td><td><span class="meh">△</span> 選配 ECC 只防位元翻轉；遺失的 blob 無法再生</td></tr>
+          <tr><th scope="row">存活度可見性</th><td class="self"><span class="yes">✓</span> 從真實配置算出還能失去幾台機器、幾個地點</td><td><span class="no">✕</span> 無此概念——只有一個後端</td></tr>
+          <tr><th scope="row">去重與壓縮</th><td class="self"><span class="meh">△</span> 目前還很初階（固定大小區塊）</td><td><span class="yes">✓</span> 強項——內容定義切塊、壓縮、跨機器去重</td></tr>
+          <tr><th scope="row">目標使用者</th><td class="self">給不想自己維運基礎設施的人的 Mac app</td><td>給樂於自己維運的人的跨平台 CLI/UI</td></tr>
+          <tr><th scope="row">費用</th><td class="self">App 收費 + 儲存 $0（自己的機器）</td><td>軟體免費開源 + 後端費用（雲端月費或自備硬體）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Kopia 在它的領域非常出色——如果你已經信任某個儲存後端，也樂於維護 repo、保留策略和驗證排程，它是很好的選擇。Recilic 存在的理由，是給那些一開始就不想要「一個必須信任的後端」的人。最接近 Recilic 的 Kopia 等效方案是「Kopia + object lock + 第二個異地 repo + 排程驗證 + 監控」——全部由你自己組裝維護。</p>
   </section>
 
   <section class="faq" id="faq">
