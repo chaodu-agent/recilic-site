@@ -446,6 +446,26 @@
       </table>
     </div>
     <p class="compare-note">Kopia는 자기 영역에서 매우 훌륭합니다 — 이미 신뢰하는 스토리지 백엔드가 있고 리포지토리·보존 정책·검증 스케줄 유지를 즐긴다면 좋은 선택입니다. Recilic은 애초에 “신뢰해야 할 백엔드”를 원하지 않는 사람들을 위해 존재합니다. Recilic에 가장 가까운 Kopia 구성은 “Kopia + 오브젝트 락 + 두 번째 원격 리포지토리 + 정기 검증 + 모니터링” — 전부 직접 조립하고 유지하는 것입니다.</p>
+    <h3 class="compare-subhead">같은 동전의 양면: Recilic vs. IPFS</h3>
+    <p class="section-sub">IPFS는 “세상이 콘텐츠를 효율적으로 가져가는 법”에 답하고, Recilic은 “재해 후 내 데이터가 내게 돌아오는 법”에 답합니다. 배포망과 금고의 차이입니다.</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">IPFS</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">목적</th><td class="self">백업: 재해 후 <em>내</em> 데이터를 온전히 되찾는 것</td><td>콘텐츠 주소 기반 배포: <em>누구나</em> 같은 콘텐츠를 효율적으로 가져가는 것</td></tr>
+          <tr><th scope="row">네트워크</th><td class="self"><span class="yes">✓</span> 내가 소유하거나 신뢰하는 기기들로 구성한 닫힌 메시</td><td>전 세계 공개 P2P 네트워크 — 어떤 노드든 참여 가능</td></tr>
+          <tr><th scope="row">프라이버시</th><td class="self"><span class="yes">✓</span> 기본이 종단간 암호화. 노드는 읽을 수 없는 조각만 보관</td><td><span class="no">✕</span> 기본은 비암호화 — CID를 아는 누구나 내용을 읽을 수 있음. 암호화는 직접</td></tr>
+          <tr><th scope="row">영속성</th><td class="self"><span class="yes">✓</span> 그것이 곧 제품: 이중화, 감사, 자가 복구, 복원 훈련</td><td><span class="no">✕</span> 내장 보장 없음 — 핀되지 않은 콘텐츠는 GC됨. "IPFS에 있다" = <em>가져올 수 있다</em>이지 <em>보존된다</em>가 아님</td></tr>
+          <tr><th scope="row">이중화</th><td class="self"><span class="yes">✓</span> 이레이저 코딩: 1.5배 공간으로 2개 손실 감내, 장애 도메인을 가로질러 의도적으로 배치</td><td><span class="meh">△</span> 누군가 핀한 곳마다 전체 복사본. 인기 콘텐츠는 어디에나, 비인기 콘텐츠는 내 노드에만 있을 수도</td></tr>
+          <tr><th scope="row">히스토리·버전</th><td class="self"><span class="yes">✓</span> 불변·일련번호·키 결속 백업 세대 — 백업 의미론이 내장</td><td><span class="meh">△</span> 콘텐츠 주소는 불변이지만 스냅샷·보존 정책·타임라인은 직접 구축</td></tr>
+          <tr><th scope="row">검증</th><td class="self"><span class="yes">✓</span> 능동적 보유 감사 + 리허설된 복원</td><td><span class="meh">△</span> CID는 가져온 데이터의 무결성을 증명 — 노드가 아직 보관 중이라는 증명은 없음</td></tr>
+          <tr><th scope="row">복구</th><td class="self"><span class="yes">✓</span> 생존 샤드로부터 결손을 자동 재구축</td><td><span class="no">✕</span> 자가 복구 없음 — 마지막 복사본이 사라지면 끝</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">IPFS를 백업으로 쓰는 것은 그 기본값과 싸우는 일입니다 — 암호화, 핀 관리, 검증, 복구를 직접 더하다 보면 대략 Recilic을 다시 만든 셈이 됩니다. IPFS 생태계 스스로의 영속성 답안은 Filecoin이며, 그 스토리지 증명 인센티브는 Recilic의 보유 감사와 사상적으로 같은 계열입니다 — 다만 Filecoin은 토큰으로 낯선 사람에게 보관을 맡기고, Recilic은 나와 친구가 이미 가진 Mac을 씁니다. 수수료 없음, 토큰 없음, 낯선 사람 없음.</p>
   </section>
 
   <section class="faq" id="faq">

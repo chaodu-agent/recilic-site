@@ -446,6 +446,26 @@
       </table>
     </div>
     <p class="compare-note">Kopia 在它的領域非常出色——如果你已經信任某個儲存後端，也樂於維護 repo、保留策略和驗證排程，它是很好的選擇。Recilic 存在的理由，是給那些一開始就不想要「一個必須信任的後端」的人。最接近 Recilic 的 Kopia 等效方案是「Kopia + object lock + 第二個異地 repo + 排程驗證 + 監控」——全部由你自己組裝維護。</p>
+    <h3 class="compare-subhead">同一枚硬幣的兩面：Recilic vs. IPFS</h3>
+    <p class="section-sub">IPFS 回答「世界如何高效取得內容」；Recilic 回答「災難後我的資料如何回到我手上」。一個是分發網，一個是保險櫃。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">IPFS</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">目的</th><td class="self">備份：災難後把<em>你的</em>資料完整拿回來</td><td>內容定址的分發：讓<em>任何人</em>都能高效取得同一份內容</td></tr>
+          <tr><th scope="row">網路</th><td class="self"><span class="yes">✓</span> 你自己擁有或信任的機器組成的封閉網格</td><td>全球公開 P2P 網路——任何節點都能加入</td></tr>
+          <tr><th scope="row">隱私</th><td class="self"><span class="yes">✓</span> 預設端到端加密；節點只持有無法讀取的碎片</td><td><span class="no">✕</span> 預設不加密——拿到 CID 就能讀內容；加密要自己做</td></tr>
+          <tr><th scope="row">持久性</th><td class="self"><span class="yes">✓</span> 這就是產品本身：冗餘、稽核、自我修復、還原演練</td><td><span class="no">✕</span> 沒有內建保證——沒人 pin 的內容會被垃圾回收。「上了 IPFS」= <em>可被取得</em>，不是<em>被保存</em></td></tr>
+          <tr><th scope="row">冗餘</th><td class="self"><span class="yes">✓</span> 糾刪碼：1.5 倍空間容忍 2 份損失，主動跨故障域放置</td><td><span class="meh">△</span> 有人 pin 哪裡就有全份副本；熱門內容到處都是，冷門內容可能只在你自己的節點上</td></tr>
+          <tr><th scope="row">歷史與版本</th><td class="self"><span class="yes">✓</span> 不可變、帶序號、綁定金鑰的備份世代——備份語意是內建的</td><td><span class="meh">△</span> 內容定址天然不可變，但快照、保留策略、時間軸要自己在上面搭</td></tr>
+          <tr><th scope="row">驗證</th><td class="self"><span class="yes">✓</span> 主動持有稽核 + 演練過的還原</td><td><span class="meh">△</span> CID 證明取回的資料沒被竄改——但沒有東西證明某節點還存著它</td></tr>
+          <tr><th scope="row">修復</th><td class="self"><span class="yes">✓</span> 從倖存分片自動重建缺損</td><td><span class="no">✕</span> 無自我修復——最後一份副本消失就沒了</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">用 IPFS 做備份等於先對抗它的預設——自己補上加密、pin 管理、驗證與修復；全部補完，你大概就重造了一個 Recilic。IPFS 生態自己對持久性的答案是 Filecoin，它的儲存證明激勵在思路上和 Recilic 的持有稽核同一家族——差別是 Filecoin 用代幣付錢請陌生人存你的資料，Recilic 用你和朋友已經擁有的 Mac。零費用、零代幣、零陌生人。</p>
   </section>
 
   <section class="faq" id="faq">

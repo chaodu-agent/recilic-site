@@ -475,6 +475,26 @@
       </table>
     </div>
     <p class="compare-note">Kopia is excellent at what it does — if you already trust a storage backend and enjoy maintaining repos, retention policies, and verification schedules, it’s a great choice. Recilic exists for everyone who doesn’t want a backend to trust in the first place. The closest Kopia equivalent to Recilic is “Kopia + object lock + a second off-site repo + scheduled verifies + monitoring” — assembled and maintained by you.</p>
+    <h3 class="compare-subhead">Different coin, same metal: Recilic vs. IPFS</h3>
+    <p class="section-sub">IPFS answers “how does the world fetch content efficiently.” Recilic answers “how does my data come back to me after a disaster.” A distribution network vs. a safe.</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">IPFS</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Purpose</th><td class="self">Backup: getting <em>your</em> data back after disaster</td><td>Content-addressed distribution: letting <em>anyone</em> fetch the same content efficiently</td></tr>
+          <tr><th scope="row">Network</th><td class="self"><span class="yes">✓</span> A closed mesh of machines you own or trust</td><td>A global public peer-to-peer network — any node can join</td></tr>
+          <tr><th scope="row">Privacy</th><td class="self"><span class="yes">✓</span> End-to-end encrypted by default; nodes hold unreadable fragments</td><td><span class="no">✕</span> Unencrypted by default — anyone with the CID can read the content; encryption is your job</td></tr>
+          <tr><th scope="row">Persistence</th><td class="self"><span class="yes">✓</span> The whole product: redundancy, audits, self-healing, restore drills</td><td><span class="no">✕</span> None built in — unpinned content gets garbage-collected. "On IPFS" means <em>fetchable</em>, not <em>preserved</em></td></tr>
+          <tr><th scope="row">Redundancy</th><td class="self"><span class="yes">✓</span> Erasure coding: 1.5× space survives 2 losses, placed across failure domains deliberately</td><td><span class="meh">△</span> Full copies wherever someone pins; popular content is everywhere, cold content may exist only on your node</td></tr>
+          <tr><th scope="row">History &amp; versions</th><td class="self"><span class="yes">✓</span> Immutable, sequence-numbered, key-bound generations — backup semantics built in</td><td><span class="meh">△</span> Content addressing is immutable, but snapshots/retention/timelines are yours to build on top</td></tr>
+          <tr><th scope="row">Verification</th><td class="self"><span class="yes">✓</span> Active possession audits + rehearsed restores</td><td><span class="meh">△</span> CIDs prove integrity of what you fetched — nothing proves a node still stores it</td></tr>
+          <tr><th scope="row">Repair</th><td class="self"><span class="yes">✓</span> Lost shards rebuilt automatically from survivors</td><td><span class="no">✕</span> No self-healing — when the last copy disappears, it’s gone</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">Using IPFS as backup means fighting its defaults — adding encryption, pin management, verification, and repair yourself; finish all that and you’ve roughly rebuilt Recilic. Its ecosystem’s own answer to persistence is Filecoin, whose proof-of-storage incentives are philosophically close to Recilic’s possession audits — except Filecoin pays strangers with tokens to hold your data, and Recilic uses the Macs you and your friends already own. No fees, no tokens, no strangers.</p>
   </section>
 
   <section class="faq" id="faq">

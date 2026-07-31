@@ -446,6 +446,26 @@
       </table>
     </div>
     <p class="compare-note">Kopia はその領域で非常に優秀です——すでに信頼するバックエンドがあり、リポジトリ・保持ポリシー・検証スケジュールの維持を楽しめるなら、素晴らしい選択肢。Recilic は「そもそも信頼すべきバックエンドを持ちたくない」人のために存在します。Recilic に最も近い Kopia 構成は「Kopia + オブジェクトロック + 第2の遠隔リポジトリ + 定期検証 + 監視」——すべて自分で組んで維持するもの。</p>
+    <h3 class="compare-subhead">同じコインの裏表：Recilic vs. IPFS</h3>
+    <p class="section-sub">IPFS が答えるのは「世界がコンテンツを効率よく取得するには」。Recilic が答えるのは「災害の後、データが自分の手に戻るには」。配信網と金庫の違いです。</p>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Recilic</th><th scope="col">IPFS</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">目的</th><td class="self">バックアップ：災害の後に<em>あなたの</em>データを取り戻すこと</td><td>コンテンツアドレス型の配信：<em>誰でも</em>同じコンテンツを効率よく取得できること</td></tr>
+          <tr><th scope="row">ネットワーク</th><td class="self"><span class="yes">✓</span> 自分が所有・信頼するマシンで組む閉じたメッシュ</td><td>世界規模の公開 P2P ネットワーク——どのノードでも参加可能</td></tr>
+          <tr><th scope="row">プライバシー</th><td class="self"><span class="yes">✓</span> 既定でエンドツーエンド暗号化。ノードは読めない断片のみ保持</td><td><span class="no">✕</span> 既定では非暗号化——CID を知る人は誰でも内容を読める。暗号化は自前</td></tr>
+          <tr><th scope="row">永続性</th><td class="self"><span class="yes">✓</span> それこそが製品：冗長性、監査、自己修復、復元ドリル</td><td><span class="no">✕</span> 組み込みの保証なし——ピンされないコンテンツは GC される。「IPFS にある」=<em>取得可能</em>であって<em>保存済み</em>ではない</td></tr>
+          <tr><th scope="row">冗長性</th><td class="self"><span class="yes">✓</span> 消失訂正符号：1.5 倍の容量で 2 つの損失に耐え、故障ドメインをまたいで意図的に配置</td><td><span class="meh">△</span> ピンされた場所にフルコピー。人気コンテンツは至る所に、不人気なものは自分のノードだけかも</td></tr>
+          <tr><th scope="row">履歴とバージョン</th><td class="self"><span class="yes">✓</span> 不変・連番・鍵束縛のバックアップ世代——バックアップの意味論が組み込み</td><td><span class="meh">△</span> コンテンツアドレスは不変だが、スナップショット・保持・時系列は自分で構築</td></tr>
+          <tr><th scope="row">検証</th><td class="self"><span class="yes">✓</span> 能動的な保有監査 + リハーサル済みの復元</td><td><span class="meh">△</span> CID は取得物の完全性を証明——ノードがまだ保存している証明は何もない</td></tr>
+          <tr><th scope="row">修復</th><td class="self"><span class="yes">✓</span> 生存シャードから欠損を自動再構築</td><td><span class="no">✕</span> 自己修復なし——最後のコピーが消えたら終わり</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-note">IPFS をバックアップに使うことは、その既定と戦うこと——暗号化、ピン管理、検証、修復を自前で足していけば、出来上がるのはほぼ Recilic です。IPFS エコシステム自身の永続性への答えは Filecoin で、そのストレージ証明のインセンティブは Recilic の保有監査と思想的に近い——ただし Filecoin はトークンで見知らぬ人に保存を頼み、Recilic はあなたと友人がすでに持つ Mac を使います。手数料なし、トークンなし、他人なし。</p>
   </section>
 
   <section class="faq" id="faq">
