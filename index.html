@@ -526,6 +526,14 @@
       <p>Yes. Backups are versioned and snapshots are immutable — normal writes can't overwrite history, and deletions are delayed rather than immediate. If today's files are encrypted by ransomware or deleted by mistake, yesterday's version is still there to restore.</p>
     </details>
     <details>
+      <summary>Isn't iCloud / Google Drive / Dropbox already my backup?</summary>
+      <p>No — those are sync services, and sync's job is to make every device look the same. Delete a folder by mistake, or let ransomware encrypt your files, and sync faithfully propagates the damage everywhere within seconds. Version history is short (typically 30 days, and iCloud has none for most file types), and iCloud's "Optimize Mac Storage" can quietly remove your only full local copy. A mirror is not insurance. Keep them for sync and sharing — Recilic covers what they can't: immutable, permanent, encrypted history of your files, on machines you control.</p>
+    </details>
+    <details>
+      <summary>Why not just pay $9/month for cloud backup?</summary>
+      <p>Services like Backblaze are genuinely good — if you're happy paying rent forever, per computer, and trusting a company both to keep your data and to decrypt it (restoring with a private key means handing them your passphrase that day). Recilic is for the other case: keys that never leave your hands, permanent version history instead of a 30-day window, restores at LAN speed instead of days of downloading, and proof — not promises — that recovery works. If you already own a spare Mac or two, you already own better infrastructure than the rented kind. Why rent what you already own?</p>
+    </details>
+    <details>
       <summary>When is it available?</summary>
       <p>Recilic is in development, coming to the Mac App Store. <a href="mailto:hello@recilic.app?subject=Notify%20me%20about%20Recilic">Drop us a line</a> to be notified at launch.</p>
     </details>
