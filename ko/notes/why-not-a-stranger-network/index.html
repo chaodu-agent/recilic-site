@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recilic이 '낯선 사람 네트워크'를 하지 않는 이유 · Recilic</title>
+  <meta name="description" content="분산 스토리지와 같은 기술 스택 — 단, 블록체인은 뺐습니다. 블록체인이 해결하는 문제가 Recilic에는 없기 때문입니다.">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/ko/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/ko/#features">기능</a>
+      <a href="/ko/#faq">FAQ</a>
+      <a class="active" href="/ko/notes/">노트</a>
+      <span class="lang"><a href="/zh/notes/why-not-a-stranger-network/">中文</a>|<a href="/ja/notes/why-not-a-stranger-network/">日本語</a>|<a class="active" href="/ko/notes/why-not-a-stranger-network/">한국어</a>|<a href="/notes/why-not-a-stranger-network/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/ko/notes/">← 노트</a></p>
+    <h1>Recilic이 '낯선 사람 네트워크'를 하지 않는 이유</h1>
+    <p class="meta">2026년 7월 · Recilic 개발 노트</p>
+    <p class="lede">기술자가 Recilic에 던지는 가장 합리적인 질문: "종단간 암호화, 이레이저 코딩, 보유 증명 감사까지 만들었다면 분산 스토리지 네트워크의 대부분은 이미 완성입니다. 인센티브 층을 얹어 낯선 사람들끼리 샤드를 맡기게 하면 되지 않나요 — 백업계의 Filecoin이 되지 않는 이유가 뭔가요?"</p>
+    <p>짧은 답: 우정이 토큰보다 나은 프로토콜이기 때문입니다. 긴 답은 아래에.</p>
+    <h2>무덤</h2>
+    <p>"전 세계의 노는 디스크를 스토리지 시장으로 바꾸자"는 5년마다 한 번씩 진지하게 시도될 만큼 매력적인 아이디어입니다. MojoNation(2000), Wuala의 스토리지 교환(2008), Symform(2009), Space Monkey(2012), Storj 초기의 소비자 노드, Sia. 이들의 소비자 버전은 전부 죽거나 전환했습니다. 생존자 — Filecoin과 오늘의 Storj — 가 상대하는 것은 web3 프로젝트와 S3 호환 기업 스토리지이지, 가족사진을 백업하는 사람이 아닙니다.</p>
+    <p>실패는 우연이 아니라 구조적이었습니다:</p>
+    <p><strong>낯선 사람의 이탈은 독입니다.</strong> 남의 가정용 기기는 예고 없이 영구히 네트워크를 떠나며, 당신에게 아무 빚도 없습니다. 유일한 방어는 공격적인 과잉 복제와 끊임없는 복구 트래픽 — 바로 그것이 참여자에게 "거의 느끼지 못할 것"이라 약속했던 대역폭을 먹어치웁니다. 복구가 늘수록 → 조건이 나빠지고 → 더 많이 떠나고 → 복구가 더 늘어난다. 문헌이 잘 갖춰진 죽음의 소용돌이입니다.</p>
+    <p><strong>인센티브 층이 제품을 잡아먹습니다.</strong> 낯선 사람이 데이터를 신뢰성 있게 보관하려면 대가가 필요하고, 대가에는 가격이, 가격에는 시장이, 시장에는 평판·처벌·분쟁 해결이 필요합니다. Filecoin은 이에 답하려고 블록체인을 통째로 하나 세웠습니다 — 복제 증명, 시공간 증명, 슬래싱, 토큰 경제 — 그런데도 "Mac과 사진 라이브러리를 가진 사람"이 그냥 쓸 수 있는 물건은 아직 아닙니다. 시장을 정직하게 유지하는 데 쓰는 엔지니어링 1시간은 백업을 더 좋게 만드는 데 쓰지 못한 1시간입니다.</p>
+    <p><strong>양면 시장의 콜드 스타트는 잔혹합니다.</strong> 공급 없이 수요 없고, 수요 없이 공급 없다. 친구 메시에는 이 문제가 없습니다: 당신과 당신의 Mac 두 대가 이미 최소 실용 네트워크입니다.</p>
+    <p><strong>그리고 플랫폼의 현실:</strong> 토큰 경제는 실무적으로 Mac App Store와 양립할 수 없습니다 — 소비자 백업 앱이 살아야 할 곳이 바로 거기인데도요.</p>
+    <h2>우정은 더 오래된 프로토콜</h2>
+    <p>인센티브 층 전체는 단 하나의 질문에 답하기 위해 존재합니다: <em>이 노드는 왜 내 데이터를 계속 보관하는가?</em></p>
+    <p>친구 사이라면 이 질문은 저절로 답이 나옵니다. 호혜가 곧 지불입니다: 내가 네 샤드를 보관하고, 네가 내 것을 보관한다. 가격도, 평판 시스템도, 슬래싱도 필요 없습니다 — 친구의 Mac이 오프라인이 되면 문자를 보내면 되니까요. 이탈은 실제 인간관계와 연동됩니다. 노드가 메시를 떠난다면 대개 당신이 이미 알던 일입니다. "이사 가. Mac mini 바꾸려고."</p>
+    <p>게다가 맡기는 신뢰는 보기보다 작습니다. 모든 것은 기기를 떠나기 전에 암호화되고, 어떤 노드도 — 복원 임계값 미만의 어떤 결탁도 — 아무것도 재구성할 수 없습니다. 친구에게 맡기는 것은 <em>가용성</em>이지 기밀성이 아닙니다. 기밀성은 수학이 보장하고, 가용성은 감사가 검증합니다: 노드는 샤드를 여전히 보유하고 있음을 바이트 단위로 정기적으로 증명해야 합니다.</p>
+    <div class="callout">Recilic의 답: 분산 스토리지와 같은 기술 스택 — 클라이언트 측 암호화, 이레이저 코딩 샤드, 보유 증명 — 에서 블록체인을 뺀 것. 블록체인이 해결하는 문제가 우리에게는 없기 때문입니다. Filecoin은 낯선 사람을 설득하려고 전 세계 규모의 시장이 필요합니다. 우리에게 필요한 건 초대 링크 하나입니다.</div>
+    <h2>정직한 한계</h2>
+    <p>친구 모델에는 실제 제약이 있습니다. 기기가 필요합니다 — 내 것이든, 공간을 맞바꿔 줄 친구의 것이든. Mac이 딱 한 대뿐이고 여유 디스크를 가진 지인도 없다면, 오늘의 Recilic이 줄 수 있는 것은 클라우드 백업 구독보다 적습니다 — 우리 비교 페이지에도 그렇게 적혀 있습니다.</p>
+    <p>친구에게 부탁하지 않고 상시 가동 노드를 원하는 사람에게는 낯선 사람 시장이 필요 없는 중간 길이 있습니다: 공식 운영 스토리지 노드를 <em>내</em> 메시의 일원으로 구독하는 것. 다른 노드와 똑같이 암호문 조각만 보관하고, 같은 보유 감사에 응답하며, 임계값 미만에서는 아무것도 재구성하지 못합니다. 우리 자신조차 보관한 내용을 읽을 수 없습니다. 이것은 서비스 관계이지 시장이 아닙니다 — 토큰은 필요 없습니다.</p>
+    <h2>문은 잠겨 있지 않다</h2>
+    <p>아키텍처에 낯선 노드를 금지하는 것은 없습니다. 샤드는 암호문이고, 감사는 챌린지 상대를 가리지 않으며, 배치는 장애 도메인의 주인이 누구인지 신경 쓰지 않습니다. 언젠가 정말 지속 가능한 개방형 네트워크 모델이 나타난다면, 기본 요소들은 준비되어 있습니다.</p>
+    <p>그러나 로드맵은 분명합니다: 이미 서로 신뢰하는 사람들 사이의 백업을 당연하게 느껴질 만큼 좋게 만드는 것. 이번 주말에라도 만들 수 있는 메시 — 내 Mac mini, 사무실의 Studio, 도시 반대편의 친구 — 그것이 제품입니다. 나머지는 전부 maybe입니다.</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>為什麼 Recilic 不做陌生人網路 · Recilic</title>
+  <meta name="description" content="和去中心化儲存同樣的技術棧——但沒有區塊鏈，因為區塊鏈解決的問題，Recilic 沒有。">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/zh/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/zh/#features">功能特色</a>
+      <a href="/zh/#faq">常見問題</a>
+      <a class="active" href="/zh/notes/">筆記</a>
+      <span class="lang"><a class="active" href="/zh/notes/why-not-a-stranger-network/">中文</a>|<a href="/ja/notes/why-not-a-stranger-network/">日本語</a>|<a href="/ko/notes/why-not-a-stranger-network/">한국어</a>|<a href="/notes/why-not-a-stranger-network/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/zh/notes/">← 筆記</a></p>
+    <h1>為什麼 Recilic 不做陌生人網路</h1>
+    <p class="meta">2026 年 7 月 · Recilic 開發筆記</p>
+    <p class="lede">技術人看到 Recilic 最合理的疑問：「你們已經做了端到端加密、糾刪碼、持有證明稽核——這就是去中心化儲存網路的大半了。為什麼不加一層激勵機制，讓陌生人互相存分片——為什麼不做備份界的 Filecoin？」</p>
+    <p>短版答案：因為友誼是比代幣更好的協定。長版答案如下。</p>
+    <h2>墳場</h2>
+    <p>「把全世界的閒置硬碟變成儲存市場」是個好到每五年就會被認真做一次的主意。MojoNation（2000）、Wuala 的儲存交換（2008）、Symform（2009）、Space Monkey（2012）、Storj 早期的消費者節點、Sia。這些的消費者版本全部死掉或轉型。倖存者——Filecoin、今天的 Storj——服務的是 web3 專案和 S3 相容的企業儲存，不是備份家庭照片的人。</p>
+    <p>失敗是結構性的，不是偶然：</p>
+    <p><strong>陌生人的流失率是毒藥。</strong>陌生人的家用機器會無預警地永久離開網路，而且不欠你任何東西。唯一的防禦是激進的過度冗餘加上持續的修復流量——而這恰恰吃掉了當初承諾參與者「幾乎無感」的頻寬。修復越多 → 條件越差 → 越多人退出 → 修復更多。一個文獻記載完備的死亡螺旋。</p>
+    <p><strong>激勵層會吃掉整個產品。</strong>要讓陌生人可靠地存你的資料，就得付錢；付錢需要定價；定價需要市場；市場需要信譽、懲罰和仲裁。Filecoin 為了回答這個問題蓋了一整條區塊鏈——複製證明、時空證明、罰沒、代幣經濟——至今仍不是一個「有台 Mac 和照片庫的人」能直接用的東西。花在維持市場誠實上的每個工程小時，都是沒花在把備份做好上的一小時。</p>
+    <p><strong>雙邊市場的冷啟動極其殘酷。</strong>沒有供給就沒有需求，反之亦然。好友網格完全沒有這個問題：你和你的兩台 Mac 就已經是最小可用網路。</p>
+    <p><strong>還有平台現實：</strong>代幣經濟實務上和 Mac App Store 不相容——而消費者備份 app 恰恰必須活在那裡。</p>
+    <h2>友誼是更古老的協定</h2>
+    <p>整個激勵層的存在只為了回答一個問題：<em>這個節點憑什麼繼續幫我存資料？</em></p>
+    <p>在朋友之間，這個問題自己回答自己。互惠就是支付：我存你的分片，你存我的。不需要定價、不需要信譽系統、不需要罰沒——因為朋友的 Mac 離線了，你可以直接傳訊息給他。流失率和真實的人際關係綁定：一個節點離開你的網格，通常代表你本來就知道的事。「搬家了。Mac mini 換新了。」</p>
+    <p>而且你託付的信任比看起來小得多。所有東西在離開你的機器前就已加密；任何節點——以及低於還原門檻的任何合謀——都拼不出任何東西。你託付給朋友的是<em>可用性</em>，不是機密性。機密性由數學保證；可用性由稽核檢驗：節點必須定期逐位元組地證明它還持有你的分片。</p>
+    <div class="callout">Recilic 的答案：和去中心化儲存同樣的技術棧——客戶端加密、糾刪碼分片、持有證明——但沒有區塊鏈，因為區塊鏈解決的問題我們沒有。Filecoin 需要一個全球市場來說服陌生人；我們需要一個邀請連結。</div>
+    <h2>誠實的邊界</h2>
+    <p>好友模式有真實的限制。你需要機器——自己的，或願意跟你交換空間的朋友。如果你只有一台 Mac、也不認識有閒置硬碟的人，今天的 Recilic 能給你的確實比雲端備份訂閱少——我們自己的比較頁就是這麼寫的。</p>
+    <p>至於想要一個永遠在線的節點、又不想開口麻煩朋友的人，有一條不需要陌生人市場的中間路：官方營運的儲存節點，訂閱後作為<em>你的</em>網格的一員。它和其他節點一樣只持有密文碎片、回應同樣的持有稽核、低於門檻同樣拼不出任何東西。連我們自己都讀不到我們存的內容。這是服務關係，不是市場——不需要代幣。</p>
+    <h2>門沒有上鎖</h2>
+    <p>架構裡沒有任何東西禁止陌生節點。分片是密文；稽核不在乎挑戰的對象是誰；放置演算法不在乎故障域屬於誰。如果哪天真的出現可持續的開放網路模式，底層原語都是現成的。</p>
+    <p>但路線圖毫不含糊：把「本來就互相信任的人之間的備份」做到好得理所當然。你這個週末就能搭起來的網格——你的 Mac mini、辦公室的 Studio、城市另一頭的朋友——就是產品本身。其他一切都只是 maybe。</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>
