@@ -494,6 +494,8 @@
         </tbody>
       </table>
     </div>
+    <p class="compare-note"><strong>1 · "Fetchable" is not "preserved."</strong> The most common IPFS misconception is treating it as a free cloud drive. Content only lives on nodes that actively pin it — unpinned content gets garbage-collected. Persistence means a pinning service (paying and trusting a third party again) or running your own pin cluster. Recilic is the inverse: persistence <em>is</em> the product, and it actively proves it to you.</p>
+    <p class="compare-note"><strong>2 · Opposite defaults: public vs. private.</strong> IPFS is built to make content as easy as possible for <em>anyone</em> to fetch — content addressing, dedup, nearest-peer retrieval. Backup needs exactly the reverse: only you can fetch it, and everyone else — including the nodes storing it — sees nothing.</p>
     <p class="compare-note">Using IPFS as backup means fighting its defaults — adding encryption, pin management, verification, and repair yourself; finish all that and you’ve roughly rebuilt Recilic. Its ecosystem’s own answer to persistence is Filecoin, whose proof-of-storage incentives are philosophically close to Recilic’s possession audits — except Filecoin pays strangers with tokens to hold your data, and Recilic uses the Macs you and your friends already own. No fees, no tokens, no strangers.</p>
   </section>
 
