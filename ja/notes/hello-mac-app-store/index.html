@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ノート · Recilic</title>
-  <meta name="description" content="Recilic 開発の設計ノートとエッセイ。">
-  <meta property="og:title" content="Recilic ノート">
-  <meta property="og:description" content="Recilic 開発の設計ノートとエッセイ。">
-  <meta property="og:url" content="https://recilic.app/ja/notes/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://recilic.app/og-card.png">
+  <title>Recilic、Mac App Store に正式リリース · Recilic</title>
+  <meta name="description" content="Recilic 0.1.0 が本日公開——暗号化・自己修復・検証済み復元のローカルバックアップ。ファウンディング価格 $9.99。">
+  <meta property="og:title" content="Recilic、Mac App Store に正式リリース">
+  <meta property="og:description" content="Recilic 0.1.0 が本日公開——暗号化・自己修復・検証済み復元のローカルバックアップ。ファウンディング価格 $9.99。">
+  <meta property="og:url" content="https://recilic.app/ja/notes/hello-mac-app-store/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-launch.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://recilic.app/og-card.png">
+  <meta name="twitter:image" content="https://recilic.app/og-card-launch.png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -89,22 +89,24 @@
       <a href="/ja/#features">機能</a>
       <a href="/ja/#faq">FAQ</a>
       <a class="active" href="/ja/notes/">ノート</a>
-      <span class="lang"><a href="/zh/notes/">中文</a>|<a class="active" href="/ja/notes/">日本語</a>|<a href="/ko/notes/">한국어</a>|<a href="/notes/">EN</a></span>
+      <span class="lang"><a href="/zh/notes/hello-mac-app-store/">中文</a>|<a class="active" href="/ja/notes/hello-mac-app-store/">日本語</a>|<a href="/ko/notes/hello-mac-app-store/">한국어</a>|<a href="/notes/hello-mac-app-store/">EN</a></span>
     </div>
   </nav>
   <main>
-    <h1>ノート</h1>
-    <p class="meta">Recilic 開発の設計ノートとエッセイ。</p>
-    <a class="note-item" href="/ja/notes/hello-mac-app-store/">
-      <span class="date">2026年8月</span>
-      <h3>Recilic、Mac App Store に正式リリース</h3>
-      <p>0.1.0 は土台を出荷:場所を選べる暗号化保管庫、4+2 イレイジャーコーディング、不変の履歴、リハーサル済みの復元。ファウンディング価格 $9.99。</p>
-    </a>
-    <a class="note-item" href="/ja/notes/why-not-a-stranger-network/">
-      <span class="date">2026年7月</span>
-      <h3>Recilic が「見知らぬ人のネットワーク」を選ばない理由</h3>
-      <p>分散ストレージと同じスタックからブロックチェーンを引いたもの——友情はトークンより優れたプロトコルだから。</p>
-    </a>
+    <p class="crumb"><a href="/ja/notes/">← ノート</a></p>
+    <h1>Recilic、Mac App Store に正式リリース</h1>
+    <p class="meta">2026年8月 · Recilic 開発ノート</p>
+    <p class="lede">出すと決めてから3日、App Review 2ラウンドを経て——Recilic 0.1.0 が <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a> に登場しました。</p>
+    <h2>0.1.0 でできること</h2>
+    <p>この初回リリースは製品全体の土台:「証明」を真剣に扱うローカルバックアップです。</p>
+    <p><strong>暗号化保管庫、場所はあなたが決める。</strong>初回起動時に保管庫の場所を選びます——フォルダでも外付けドライブでも。各チャンクはどこかに書き込まれる前に、Mac 上で ChaCha20-Poly1305 により暗号化されます。</p>
+    <p><strong>4+2 イレイジャーコーディング。</strong>各チャンクは6つのシャードになり、任意の4つで全体を再構築。2つ失っても壊れても大丈夫——ビット腐敗は検出・修復されます。</p>
+    <p><strong>書き換え不能な履歴。</strong>各バックアップは連番付き・鍵束縛の不変な世代。昨日のバックアップは書き換えられません——ランサムウェアにも、うっかりミスにも。</p>
+    <p><strong>復元ドリル。</strong>看板機能:Recilic は定期的にファイルをエンドツーエンドで再構築し、すべて検証します。「バックアップ済み」とはリハーサル済みの復元のこと。転送完了のことではありません。</p>
+    <h2>次に来るもの</h2>
+    <p>メッシュ。シャードをほかの Mac や信頼する友人のマシンへ——家とオフィスをまたいで——複製し、単一の場所が運命を握らないようにする。それが使命であり、今日のリリースはその1階部分です。</p>
+    <div class="callout">ファウンディング価格:<strong>$9.99</strong>(買い切り)。メッシュ機能の公開とともに値上げします——早期の支持者ほど得をします。サブスクなし、クラウドアカウントなし、データ収集なし。</div>
+    <p><a href="https://apps.apple.com/app/id6796820707">Mac App Store で Recilic をダウンロード →</a></p>
   </main>
   <footer>
     <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>

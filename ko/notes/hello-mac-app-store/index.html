@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>노트 · Recilic</title>
-  <meta name="description" content="Recilic을 만들며 쓰는 설계 노트와 에세이.">
-  <meta property="og:title" content="Recilic 노트">
-  <meta property="og:description" content="Recilic을 만들며 쓰는 설계 노트와 에세이.">
-  <meta property="og:url" content="https://recilic.app/ko/notes/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://recilic.app/og-card.png">
+  <title>Recilic, Mac App Store 정식 출시 · Recilic</title>
+  <meta name="description" content="Recilic 0.1.0이 오늘 공개 — 암호화되고 자가 복구하며 복원이 검증된 로컬 백업. 파운딩 가격 $9.99.">
+  <meta property="og:title" content="Recilic, Mac App Store 정식 출시">
+  <meta property="og:description" content="Recilic 0.1.0이 오늘 공개 — 암호화되고 자가 복구하며 복원이 검증된 로컬 백업. 파운딩 가격 $9.99.">
+  <meta property="og:url" content="https://recilic.app/ko/notes/hello-mac-app-store/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-launch.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://recilic.app/og-card.png">
+  <meta name="twitter:image" content="https://recilic.app/og-card-launch.png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -89,22 +89,24 @@
       <a href="/ko/#features">기능</a>
       <a href="/ko/#faq">FAQ</a>
       <a class="active" href="/ko/notes/">노트</a>
-      <span class="lang"><a href="/zh/notes/">中文</a>|<a href="/ja/notes/">日本語</a>|<a class="active" href="/ko/notes/">한국어</a>|<a href="/notes/">EN</a></span>
+      <span class="lang"><a href="/zh/notes/hello-mac-app-store/">中文</a>|<a href="/ja/notes/hello-mac-app-store/">日本語</a>|<a class="active" href="/ko/notes/hello-mac-app-store/">한국어</a>|<a href="/notes/hello-mac-app-store/">EN</a></span>
     </div>
   </nav>
   <main>
-    <h1>노트</h1>
-    <p class="meta">Recilic을 만들며 쓰는 설계 노트와 에세이.</p>
-    <a class="note-item" href="/ko/notes/hello-mac-app-store/">
-      <span class="date">2026년 8월</span>
-      <h3>Recilic, Mac App Store 정식 출시</h3>
-      <p>0.1.0은 토대를 출하합니다: 위치를 선택하는 암호화 금고, 4+2 이레이저 코딩, 불변 히스토리, 리허설된 복원. 파운딩 가격 $9.99.</p>
-    </a>
-    <a class="note-item" href="/ko/notes/why-not-a-stranger-network/">
-      <span class="date">2026년 7월</span>
-      <h3>Recilic이 '낯선 사람 네트워크'를 하지 않는 이유</h3>
-      <p>분산 스토리지와 같은 스택에서 블록체인을 뺀 것 — 우정이 토큰보다 나은 프로토콜이기 때문입니다.</p>
-    </a>
+    <p class="crumb"><a href="/ko/notes/">← 노트</a></p>
+    <h1>Recilic, Mac App Store 정식 출시</h1>
+    <p class="meta">2026년 8월 · Recilic 개발 노트</p>
+    <p class="lede">출시를 결정한 지 3일, App Review 두 라운드를 거쳐 — Recilic 0.1.0이 <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a>에 올라왔습니다.</p>
+    <h2>0.1.0이 하는 일</h2>
+    <p>이 첫 릴리스는 제품 전체의 토대입니다: "증명"을 진지하게 다루는 로컬 백업.</p>
+    <p><strong>암호화 금고, 위치는 당신이 결정.</strong> 첫 실행 시 금고를 둘 곳을 직접 선택합니다 — 폴더든 외장 드라이브든. 모든 청크는 어딘가에 기록되기 전에 Mac에서 ChaCha20-Poly1305로 암호화됩니다.</p>
+    <p><strong>4+2 이레이저 코딩.</strong> 각 청크는 6개의 샤드가 되고, 어떤 4개로도 전체를 재구성합니다. 2개를 잃거나 손상돼도 괜찮습니다 — 비트 부패는 감지되고 복구됩니다.</p>
+    <p><strong>고쳐 쓸 수 없는 히스토리.</strong> 모든 백업은 일련번호가 붙고 키에 결속된 불변 세대입니다. 어제의 백업은 고쳐 쓸 수 없습니다 — 랜섬웨어도, 실수도.</p>
+    <p><strong>복원 훈련.</strong> 간판 기능: Recilic은 주기적으로 파일을 처음부터 끝까지 재구성하고 하나하나 검증합니다. "백업됨"은 리허설된 복원을 뜻합니다. 전송 완료가 아니라.</p>
+    <h2>다음은</h2>
+    <p>메시입니다. 샤드를 다른 Mac과 신뢰하는 친구의 기기로 — 집과 사무실을 가로질러 — 복제하여 어느 한 장소도 운명을 쥐지 못하게 하는 것. 그것이 사명이고, 오늘의 릴리스는 그 1층입니다.</p>
+    <div class="callout">파운딩 가격: <strong>$9.99</strong>, 일회성 구매. 메시 기능이 나오면 가격이 오릅니다 — 일찍 믿어준 분들이 차익을 가져갑니다. 구독 없음, 클라우드 계정 없음, 데이터 수집 없음.</div>
+    <p><a href="https://apps.apple.com/app/id6796820707">Mac App Store에서 Recilic 다운로드 →</a></p>
   </main>
   <footer>
     <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
