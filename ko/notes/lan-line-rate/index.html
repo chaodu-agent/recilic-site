@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>빌드 플래그 하나로 20배 빨라졌다 · Recilic</title>
+  <meta name="description" content="메시 백업이 1.2 MB/s에서 23.8 MB/s로 — 정작 효과가 있던 수정은 전혀 영리하지 않았습니다.">
+  <meta property="og:title" content="빌드 플래그 하나로 20배 빨라졌다">
+  <meta property="og:description" content="메시 백업이 1.2 MB/s에서 23.8 MB/s로 — 정작 효과가 있던 수정은 전혀 영리하지 않았습니다.">
+  <meta property="og:url" content="https://recilic.app/ko/notes/lan-line-rate/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/ko/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/ko/#features">기능</a>
+      <a href="/ko/#faq">FAQ</a>
+      <a class="active" href="/ko/notes/">노트</a>
+      <span class="lang"><a href="/zh/notes/lan-line-rate/">中文</a>|<a href="/ja/notes/lan-line-rate/">日本語</a>|<a class="active" href="/ko/notes/lan-line-rate/">한국어</a>|<a href="/notes/lan-line-rate/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/ko/notes/">← 노트</a></p>
+    <h1>빌드 플래그 하나로 20배 빨라졌다</h1>
+    <p class="meta">2026년 8월 · Recilic 개발 노트</p>
+    <p class="lede"><a href="/ko/notes/first-mesh/">첫 메시가 살아난</a> 다음 날 아침, 그것은 61.9 GB 사진 라이브러리를 1.2 MB/s로 방 건너편으로 보내고 있었습니다. 완료까지 14시간. 아침 식사 무렵엔 23.8 MB/s가 되어 있었고 — 정작 효과가 있던 수정은 민망할 만큼 시시한 것이었습니다.</p>
+    <p><img src="/notes/lan-line-rate/live-mesh-23mbps.png" alt="MacBook과 Mac mini 사이 23.8 MB/s의 Live mesh" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>용의자들</h2>
+    <p>떠오르는 가설은 모두 프로토콜에 관한 것이었습니다. 모든 샤드가 엄격히 하나씩 기록되고 있었죠 — 보내고, 상대의 응답을 기다리고, 다음을 보내고 — 그래서 처리량이 대역폭이 아니라 왕복 지연에 묶여 있었습니다. 약 19,000장의 사진에서는 거의 모든 파일이 단일 청크이고, 샤드마다 그 왕복을 온전히 지불합니다. 둘 다 사실이고, 둘 다 고칠 가치가 있었습니다. 그러나 둘 다 주인공은 아니었습니다.</p>
+    <p>그때 단번에 사건을 깬 질문이 왔습니다: <em>"잠깐 — 이 두 Mac이 정말 LAN으로 이야기하는 거야, 아니면 VPN을 타고 나가는 거야?"</em> 확인하려면 원시 링크를 측정해야 했습니다. 그래서 같은 두 기기 사이로 SSH를 통해 100 MB를 흘려보냈습니다. 20 MB/s. 네트워크는 문제없었습니다. Recilic은 이미 가진 길의 6퍼센트만 쓰고 있었습니다.</p>
+    <h2>멋없는 정답</h2>
+    <p>개발 빌드가 <strong>Debug</strong> 빌드였습니다. Recilic의 핫패스는 세 개의 촘촘한 루프 — GF(256) 이레이저 코딩, ChaCha20-Poly1305 봉인, SHA-256 체크섬 — 이고, 최적화되지 않은 Swift는 그 길을 대략 한 자릿수 느리게 걷습니다. 병목은 네트워크도, 프로토콜도, 병행 모델도 아니었습니다. <code>-Onone</code>이었습니다.</p>
+    <p>최적화를 켜고 다시 빌드: <strong>1.2 → 23.8 MB/s</strong>. SSH로 측정한 20 MB/s를 <em>넘어섭니다</em>. 14시간 걸리던 백업이 약 45분으로. 병목은 Wi-Fi 링크로 — 원래 있어야 할 자리로 돌아갔습니다.</p>
+    <h2>그래도 만들 가치가 있던 수정들</h2>
+    <p>프로토콜 쪽 가설은 틀린 게 아니라 순위에서 밀린 것이었고 — 결국 함께 출시했습니다. 라인레이트에 도달하면 남은 지연이 실제로 중요해지기 때문입니다:</p>
+    <p><strong>샤드 병행 기록.</strong> 청크의 여섯 샤드를 직렬이 아니라 병렬로 씁니다. 하나가 실패해도 그룹 전체를 drain해서 착지한 모든 샤드를 정리 목록에 등록합니다 — 절반만 쓰인 백업이 고아를 남겨선 안 됩니다.</p>
+    <p><strong>커넥션 풀.</strong> 피어당 4개 채널. 병행 기록의 왕복이 한 파이프 뒤에 줄서지 않고 겹칩니다.</p>
+    <p><strong>실사용에서 나온 두 상처.</strong> 전송 중에 노트북이 잠들면 예전에는 죽은 소켓 위에서 백업이 영원히 멈췄습니다 — 이제 TCP 킵얼라이브와 요청별 데드라인으로 1분 안에 "피어 사용 불가"로 드러나고, 다음 백업이 재연결합니다. 또 실행 직후 첫 연결은 macOS가 로컬 네트워크 권한 캐시를 재구성하는 동안 한 번 실패할 수 있었는데, 이제 스스로 재시도하므로 아무도 보지 못합니다.</p>
+    <p><strong>덤으로 고친 버그:</strong> 전제 조건이 빠진 상태에서 "Back Up Now"를 누르면 — 아무 일도 일어나지 않았습니다, 그것도 조용히. 누를 수 있어 보이면서 침묵으로 답하는 버튼은 에러 메시지보다 나쁩니다. 이제는 무엇이 없는지 정확히 말합니다.</p>
+    <h2>교훈을 적어 둔다</h2>
+    <div class="callout">Debug 빌드에서 성능 문제를 진단하지 말 것. 자기 프로토콜을 의심하기 전에 원시 링크를 측정할 것 — 그리고 누군가 "우리가 애초에 맞는 네트워크를 쓰고 있나?" 같은 순진해 보이는 질문을 던지면, 가서 측정할 것. 그 질문은 20배의 가치가 있었습니다.</div>
+    <p>Recilic 0.1.0은 <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a>에서 파운딩 가격 $9.99. 메시는 무료 업데이트로 — 물론 라인레이트로 — 출시됩니다.</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>

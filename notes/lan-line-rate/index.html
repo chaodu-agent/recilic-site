@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One build flag, 20× faster · Recilic</title>
+  <meta name="description" content="Mesh backup went from 1.2 MB/s to 23.8 MB/s — and the fix that mattered wasn't the clever one.">
+  <meta property="og:title" content="One build flag, 20× faster">
+  <meta property="og:description" content="Mesh backup went from 1.2 MB/s to 23.8 MB/s — and the fix that mattered wasn't the clever one.">
+  <meta property="og:url" content="https://recilic.app/notes/lan-line-rate/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "New York", Georgia, "Times New Roman", serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "New York", Georgia, "Times New Roman", serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/#features">Features</a>
+      <a href="/#faq">FAQ</a>
+      <a class="active" href="/notes/">Notes</a>
+      <span class="lang"><a href="/zh/notes/lan-line-rate/">中文</a>|<a href="/ja/notes/lan-line-rate/">日本語</a>|<a href="/ko/notes/lan-line-rate/">한국어</a>|<a class="active" href="/notes/lan-line-rate/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/notes/">← Notes</a></p>
+    <h1>One build flag, 20× faster</h1>
+    <p class="meta">August 2026 · Notes from building Recilic</p>
+    <p class="lede">The morning after the <a href="/notes/first-mesh/">first mesh came alive</a>, it was pushing a 61.9 GB photo library across the room at 1.2 MB/s. Fourteen hours to finish. By breakfast it was doing 23.8 MB/s — and the fix that mattered was embarrassingly boring.</p>
+    <p><img src="/notes/lan-line-rate/live-mesh-23mbps.png" alt="Live mesh at 23.8 MB/s between a MacBook and a Mac mini" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>The suspects</h2>
+    <p>The obvious theories were all about the protocol. Every shard was written strictly one at a time — send, wait for the peer's acknowledgement, send the next — so throughput was capped by round-trip latency rather than bandwidth. With ~19,000 photos, nearly every file is a single chunk whose shards each pay that full round trip. Both true, both worth fixing. Neither was the story.</p>
+    <p>Then came the question that cracked it: <em>"wait — are these two Macs even talking over the LAN, or are they going out through the VPN?"</em> Checking meant measuring the raw link, so: pipe 100 MB over SSH between the same two machines. 20 MB/s. The network was fine. Recilic was using six percent of a road it already had.</p>
+    <h2>The unglamorous answer</h2>
+    <p>The dev builds were <strong>Debug</strong> builds. Recilic's hot path is three tight loops — GF(256) erasure coding, ChaCha20-Poly1305 sealing, SHA-256 checksums — and unoptimized Swift walks through them roughly an order of magnitude slower. The bottleneck was never the network, the protocol, or the concurrency model. It was <code>-Onone</code>.</p>
+    <p>Rebuilt with optimizations: <strong>1.2 → 23.8 MB/s</strong>, which is <em>above</em> the 20 MB/s we measured over SSH. The backup that needed fourteen hours now needs about forty-five minutes. The bottleneck is the Wi-Fi link, exactly where it should be.</p>
+    <h2>The fixes that were still worth making</h2>
+    <p>The protocol theories weren't wrong, just outranked — and they shipped anyway, because at line rate the remaining latency actually matters:</p>
+    <p><strong>Concurrent shard writes.</strong> A chunk's six shards are now written in parallel instead of serially. If one fails, the whole group is still drained so every shard that landed gets registered for cleanup — a partially-written backup must never leave orphans behind.</p>
+    <p><strong>A connection pool.</strong> Four channels per peer, so concurrent writes overlap their round trips instead of queueing behind one pipe.</p>
+    <p><strong>Two papercuts from real use.</strong> A laptop that slept mid-transfer used to hang the backup forever on a dead socket — now TCP keepalives plus per-request deadlines surface it as "peer unavailable" within a minute, and the next backup reconnects. And the first connection after launch could fail once while macOS rebuilt its local-network permission cache; it now retries itself, so nobody sees it.</p>
+    <p><strong>One bug fixed for good measure:</strong> pressing "Back Up Now" while a prerequisite was missing did nothing at all — silently. A button that looks clickable and answers with silence is worse than an error message. It now says exactly what's missing.</p>
+    <h2>The lesson, written down</h2>
+    <div class="callout">Never diagnose a performance problem in a Debug build. Measure the raw link before blaming your own protocol — and when someone asks a naive-sounding question like "are we even on the right network?", go measure it. That question was worth 20×.</div>
+    <p>Recilic 0.1.0 is on the <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a> at a founding price of $9.99. The mesh ships as a free update — and yes, at line rate.</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>

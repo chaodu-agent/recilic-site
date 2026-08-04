@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>一個編譯旗標，快 20 倍 · Recilic</title>
+  <meta name="description" content="Mesh 備份從 1.2 MB/s 變成 23.8 MB/s——而真正有效的那個修法，一點都不聰明。">
+  <meta property="og:title" content="一個編譯旗標，快 20 倍">
+  <meta property="og:description" content="Mesh 備份從 1.2 MB/s 變成 23.8 MB/s——而真正有效的那個修法，一點都不聰明。">
+  <meta property="og:url" content="https://recilic.app/zh/notes/lan-line-rate/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-lan-line-rate.png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/zh/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/zh/#features">功能特色</a>
+      <a href="/zh/#faq">常見問題</a>
+      <a class="active" href="/zh/notes/">筆記</a>
+      <span class="lang"><a class="active" href="/zh/notes/lan-line-rate/">中文</a>|<a href="/ja/notes/lan-line-rate/">日本語</a>|<a href="/ko/notes/lan-line-rate/">한국어</a>|<a href="/notes/lan-line-rate/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/zh/notes/">← 筆記</a></p>
+    <h1>一個編譯旗標，快 20 倍</h1>
+    <p class="meta">2026 年 8 月 · Recilic 開發筆記</p>
+    <p class="lede">在<a href="/zh/notes/first-mesh/">第一個 mesh 跑起來</a>的隔天早上，它正以 1.2 MB/s 把 61.9 GB 的照片庫送過房間。跑完要十四小時。到了早餐時間，它變成 23.8 MB/s——而真正有效的那個修法，說出來有點難為情。</p>
+    <p><img src="/notes/lan-line-rate/live-mesh-23mbps.png" alt="MacBook 與 Mac mini 之間 23.8 MB/s 的 Live mesh" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>嫌疑犯名單</h2>
+    <p>顯而易見的推論全都指向協定。每個分片都是嚴格一個一個寫：送出、等對方回應、才送下一個——吞吐量被往返延遲鎖死，跟頻寬無關。而 19,000 張照片幾乎每個檔案都只有一個區塊，每個分片都要付完整的一次往返。兩件事都是真的，都值得修。但都不是主角。</p>
+    <p>然後那個一句話破案的問題來了：<em>「等一下，這兩台 Mac 該不會不是走區網，而是繞 VPN 出去吧？」</em>要確認就得量原始鏈路，於是：在同樣兩台機器之間用 SSH 灌 100 MB。20 MB/s。網路完全沒問題。Recilic 只用了自己早就擁有的那條路的百分之六。</p>
+    <h2>不光彩的答案</h2>
+    <p>開發版是 <strong>Debug</strong> build。Recilic 的熱路徑是三個緊迴圈——GF(256) 糾刪碼、ChaCha20-Poly1305 加密封裝、SHA-256 校驗——而沒有最佳化的 Swift 走過這些迴圈大約慢一個數量級。瓶頸從來不是網路、不是協定、也不是並發模型。是 <code>-Onone</code>。</p>
+    <p>開最佳化重編：<strong>1.2 → 23.8 MB/s</strong>，甚至<em>高於</em>我們用 SSH 量到的 20 MB/s。原本要十四小時的備份現在大約四十五分鐘。瓶頸回到 Wi-Fi 鏈路——它本來就該在那裡。</p>
+    <h2>那些依然值得做的修法</h2>
+    <p>協定層的推論並沒有錯，只是被更大的因素蓋過去了——而它們照樣上線了，因為到了滿速之後，剩下的延遲才真的開始有感：</p>
+    <p><strong>分片並發寫入。</strong>一個區塊的六個分片現在平行寫入，不再排隊。任何一個失敗時，整個 group 仍會被 drain 完，讓每個已經落地的分片都進入清理名單——寫一半的備份絕不能留下孤兒。</p>
+    <p><strong>連線池。</strong>每個節點四條通道，並發寫入的往返互相重疊，而不是全部塞在同一根管子後面排隊。</p>
+    <p><strong>兩個從真實使用中冒出來的傷口。</strong>筆電傳輸中途睡著，過去會讓備份永遠掛在一個死掉的 socket 上——現在 TCP keepalive 加上每個請求的期限，一分鐘內就轉成「節點暫時無法連線」，下次備份自動重連。另外，App 啟動後的第一次連線可能會失敗一次，因為 macOS 正在重建它的區網權限快取；現在它會自己重試，所以沒人會看到。</p>
+    <p><strong>順手修掉的一個 bug：</strong>前置條件缺失時按下「Back Up Now」——什麼都沒發生，而且無聲無息。一個看起來可以按、按下去卻只回你沈默的按鈕，比錯誤訊息更糟。現在它會明確說出缺什麼。</p>
+    <h2>把教訓寫下來</h2>
+    <div class="callout">絕對不要在 Debug build 上診斷效能問題。在怪自己的協定之前，先量原始鏈路——而當有人問出「我們到底有沒有走對網路？」這種聽起來很天真的問題時，就去量它。那個問題值 20 倍。</div>
+    <p>Recilic 0.1.0 已上架 <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a>，創始價 $9.99。mesh 會以免費更新推出——而且是滿速的。</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>
