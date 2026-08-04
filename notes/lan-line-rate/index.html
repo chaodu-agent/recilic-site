@@ -102,7 +102,13 @@
     <p>The obvious theories were all about the protocol. Every shard was written strictly one at a time — send, wait for the peer's acknowledgement, send the next — so throughput was capped by round-trip latency rather than bandwidth. With ~19,000 photos, nearly every file is a single chunk whose shards each pay that full round trip. Both true, both worth fixing. Neither was the story.</p>
     <p>Then came the question that cracked it: <em>"wait — are these two Macs even talking over the LAN, or are they going out through the VPN?"</em> Checking meant measuring the raw link, so: pipe 100 MB over SSH between the same two machines. 20 MB/s. The network was fine. Recilic was using six percent of a road it already had.</p>
     <h2>The unglamorous answer</h2>
-    <p>The dev builds were <strong>Debug</strong> builds. Recilic's hot path is three tight loops — GF(256) erasure coding, ChaCha20-Poly1305 sealing, SHA-256 checksums — and unoptimized Swift walks through them roughly an order of magnitude slower. The bottleneck was never the network, the protocol, or the concurrency model. It was <code>-Onone</code>.</p>
+    <p>The dev builds were <strong>Debug</strong> builds. So I benchmarked the hot path in both configurations, 8 MB through each stage:</p>
+    <p><code>erasure-encode (our Swift): 3.2 MB/s → 142.9 MB/s &nbsp;(44×)</code><br>
+    <code>ChaChaPoly seal (CryptoKit): 958.8 → 958.5 MB/s &nbsp;(1.0×)</code><br>
+    <code>SHA-256 (CryptoKit): 3260 → 3156 MB/s &nbsp;(1.0×)</code><br>
+    <code>chunk split (our Swift): 1965 → 2080 MB/s &nbsp;(1.1×)</code></p>
+    <p>The entire deficit lives in one place: the GF(256) erasure coder. The crypto was never slow — CryptoKit ships pre-optimized inside the system, so your build settings can't hurt it. But the coder is <em>our</em> Swift, multiplying every single byte through a lookup table. With optimizations on, <code>gfMul</code> inlines into a tight loop, the <code>Data</code> retain/release traffic disappears, and whole-module optimization inlines the tables across files. With <code>-Onone</code>, every byte pays a real function call plus reference counting.</p>
+    <p>And the numbers line up exactly: a 3.2 MB/s coder, minus I/O and framing overhead, is the 1.2–2 MB/s we were seeing. A 142.9 MB/s coder is far above the 20 MB/s network — so the bottleneck moved to the wire, which is where it belongs.</p>
     <p>Rebuilt with optimizations: <strong>1.2 → 23.8 MB/s</strong>, which is <em>above</em> the 20 MB/s we measured over SSH. The backup that needed fourteen hours now needs about forty-five minutes. The bottleneck is the Wi-Fi link, exactly where it should be.</p>
     <h2>The fixes that were still worth making</h2>
     <p>The protocol theories weren't wrong, just outranked — and they shipped anyway, because at line rate the remaining latency actually matters:</p>
