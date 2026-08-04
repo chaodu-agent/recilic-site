@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>筆記 · Recilic</title>
-  <meta name="description" content="Recilic 開發過程中的設計筆記與隨筆。">
-  <meta property="og:title" content="Recilic 筆記">
-  <meta property="og:description" content="Recilic 開發過程中的設計筆記與隨筆。">
-  <meta property="og:url" content="https://recilic.app/zh/notes/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://recilic.app/og-card.png">
+  <title>第一個 Mesh 活起來了 · Recilic</title>
+  <meta name="description" content="兩台 Mac、一個加密網格：今晚 Recilic 的分片第一次跨越網路——配對握手、即時傳輸、純密文儲存。">
+  <meta property="og:title" content="第一個 Mesh 活起來了">
+  <meta property="og:description" content="兩台 Mac、一個加密網格：今晚 Recilic 的分片第一次跨越網路——配對握手、即時傳輸、純密文儲存。">
+  <meta property="og:url" content="https://recilic.app/zh/notes/first-mesh/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-first-mesh.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://recilic.app/og-card.png">
+  <meta name="twitter:image" content="https://recilic.app/og-card-first-mesh.png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -89,27 +89,26 @@
       <a href="/zh/#features">功能特色</a>
       <a href="/zh/#faq">常見問題</a>
       <a class="active" href="/zh/notes/">筆記</a>
-      <span class="lang"><a class="active" href="/zh/notes/">中文</a>|<a href="/ja/notes/">日本語</a>|<a href="/ko/notes/">한국어</a>|<a href="/notes/">EN</a></span>
+      <span class="lang"><a class="active" href="/zh/notes/first-mesh/">中文</a>|<a href="/ja/notes/first-mesh/">日本語</a>|<a href="/ko/notes/first-mesh/">한국어</a>|<a href="/notes/first-mesh/">EN</a></span>
     </div>
   </nav>
   <main>
-    <h1>筆記</h1>
-    <p class="meta">Recilic 開發過程中的設計筆記與隨筆。</p>
-    <a class="note-item" href="/zh/notes/first-mesh/">
-      <span class="date">2026 年 8 月</span>
-      <h3>第一個 Mesh 活起來了</h3>
-      <p>兩台 Mac、一條邀請連結、61.9 GB 化成加密分片流動——今晚 mesh 有了第一次呼吸，附截圖。</p>
-    </a>
-    <a class="note-item" href="/zh/notes/hello-mac-app-store/">
-      <span class="date">2026 年 8 月</span>
-      <h3>Recilic 正式上架 Mac App Store</h3>
-      <p>0.1.0 交付地基：自選位置的加密金庫、4+2 糾刪碼、不可改寫的歷史、演練過的還原。創始價 $9.99。</p>
-    </a>
-    <a class="note-item" href="/zh/notes/why-not-a-stranger-network/">
-      <span class="date">2026 年 7 月</span>
-      <h3>為什麼 Recilic 不做陌生人網路</h3>
-      <p>和去中心化儲存同樣的技術棧，但沒有區塊鏈——因為友誼是比代幣更好的協定。</p>
-    </a>
+    <p class="crumb"><a href="/zh/notes/">← 筆記</a></p>
+    <h1>第一個 Mesh 活起來了</h1>
+    <p class="meta">2026 年 8 月 · Recilic 開發筆記</p>
+    <p class="lede">今晚，Recilic 的分片第一次離開一台 Mac、落在另一台上。一台 MacBook、一台 Mac mini、一條邀請連結，61.9 GB 的照片庫化成加密分片流過房間。Mesh——這個產品存在的理由——今晚有了第一次呼吸。</p>
+    <p><img src="/notes/first-mesh/live-mesh.png" alt="Live mesh 視圖：這台 Mac 正把分片串流到 Mac mini，連線上顯示即時速率" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>你看到的是什麼</h2>
+    <p><strong>Live mesh</strong> 視圖：左邊的 MacBook 正在備份，右邊的 Mac mini 負責儲存。琥珀色的跑馬燈沿著資料流的方向流動，線上標著即時速率。在 Mac mini 的螢幕上，同一張圖的彗星是<em>流入</em>的——activity 裡還多了一筆它值得驕傲的記錄：「Stored 846 encrypted shards for Pahud's MacBook」。</p>
+    <p><img src="/notes/first-mesh/overview.png" alt="Mesh 備份進行中的 Overview：61.9 GB 正分散到 2 個節點" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>兩台 Mac 是怎麼認識的</h2>
+    <p>沒有帳號、沒有伺服器、沒有設定。Mac mini 生成一條單次使用的邀請連結，MacBook 貼上它。水面下：Bonjour 在區網找到對方，HMAC 證明「持有邀請秘密」而秘密本身從不上線，雙方從綁定完整 transcript 的 ECDH 握手導出方向性金鑰，之後每次重連都要先用密碼學證明持有這些金鑰，才有資格移動任何一個分片。邀請連結在使用的那一刻就死了。</p>
+    <p><img src="/notes/first-mesh/activity.png" alt="分片加密寫入網格時的 activity 串流" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>Mac mini 看得到什麼</h2>
+    <p>它存的每樣東西長這樣：<code>61b3a6aa….shard</code>——用自身雜湊命名的不透明 blob。沒有檔名、沒有目錄結構、沒有內容，連「哪個分片屬於哪個檔案」都無從分辨。而每個區塊需要 6 個分片中的任意 4 個才能重建，單一節點的收藏拼出來的東西正好是：零。幫你存備份的朋友讀不了你的備份。這句話原本是承諾，現在是截圖。</p>
+    <h2>誠實的註腳</h2>
+    <p>這是第一階段：同一個網路裡的兩台 Mac。跨網路的朋友、自適應分片幾何、節點死亡復原都在後面。而且兩個節點時，存活度報告誠實地說：失去一個節點仍然會痛——4+2 的數學需要第三個節點才能對單機損失聳聳肩。這份報告從不奉承；這正是它存在的意義。</p>
+    <div class="callout">Recilic 0.1.0 已上架 <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a>，創始價 <strong>$9.99</strong>——mesh 會以免費更新推出，推出時價格調高。早期支持者一路同行。</div>
   </main>
   <footer>
     <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>

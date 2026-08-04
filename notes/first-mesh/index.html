@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notes · Recilic</title>
-  <meta name="description" content="Design notes and essays from building Recilic.">
-  <meta property="og:title" content="Recilic Notes">
-  <meta property="og:description" content="Design notes and essays from building Recilic.">
-  <meta property="og:url" content="https://recilic.app/notes/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://recilic.app/og-card.png">
+  <title>The first mesh is alive · Recilic</title>
+  <meta name="description" content="Two Macs, one encrypted mesh: tonight Recilic's shards crossed the network for the first time — pairing handshake, live transfer, ciphertext-only storage.">
+  <meta property="og:title" content="The first mesh is alive">
+  <meta property="og:description" content="Two Macs, one encrypted mesh: tonight Recilic's shards crossed the network for the first time — pairing handshake, live transfer, ciphertext-only storage.">
+  <meta property="og:url" content="https://recilic.app/notes/first-mesh/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-first-mesh.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://recilic.app/og-card.png">
+  <meta name="twitter:image" content="https://recilic.app/og-card-first-mesh.png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -89,27 +89,26 @@
       <a href="/#features">Features</a>
       <a href="/#faq">FAQ</a>
       <a class="active" href="/notes/">Notes</a>
-      <span class="lang"><a href="/zh/notes/">中文</a>|<a href="/ja/notes/">日本語</a>|<a href="/ko/notes/">한국어</a>|<a class="active" href="/notes/">EN</a></span>
+      <span class="lang"><a href="/zh/notes/first-mesh/">中文</a>|<a href="/ja/notes/first-mesh/">日本語</a>|<a href="/ko/notes/first-mesh/">한국어</a>|<a class="active" href="/notes/first-mesh/">EN</a></span>
     </div>
   </nav>
   <main>
-    <h1>Notes</h1>
-    <p class="meta">Design notes and essays from building Recilic.</p>
-    <a class="note-item" href="/notes/first-mesh/">
-      <span class="date">August 2026</span>
-      <h3>The first mesh is alive</h3>
-      <p>Two Macs, one invite link, 61.9 GB flowing as encrypted shards — the mesh drew its first breath tonight, with screenshots.</p>
-    </a>
-    <a class="note-item" href="/notes/hello-mac-app-store/">
-      <span class="date">August 2026</span>
-      <h3>Recilic is live on the Mac App Store</h3>
-      <p>0.1.0 ships the foundation: an encrypted vault where you choose, 4+2 erasure coding, immutable history, and rehearsed restores. Founding price $9.99.</p>
-    </a>
-    <a class="note-item" href="/notes/why-not-a-stranger-network/">
-      <span class="date">July 2026</span>
-      <h3>Why Recilic isn't a stranger network</h3>
-      <p>Same stack as decentralized storage, minus the blockchain — because friendship is a better protocol than tokens.</p>
-    </a>
+    <p class="crumb"><a href="/notes/">← Notes</a></p>
+    <h1>The first mesh is alive</h1>
+    <p class="meta">August 2026 · Notes from building Recilic</p>
+    <p class="lede">Tonight, for the first time, a Recilic shard left one Mac and landed on another. A MacBook and a Mac mini, one invite link, and a 61.9 GB photo library flowing across the room as encrypted shards. The mesh — the whole reason this product exists — drew its first breath.</p>
+    <p><img src="/notes/first-mesh/live-mesh.png" alt="Live mesh view: this Mac streaming shards to a Mac mini with a live transfer rate" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>What you're looking at</h2>
+    <p>The <strong>Live mesh</strong> view: the MacBook on the left is backing up, the Mac mini on the right is storing. The amber marquee streams in the direction the data flows, with the live rate on the edge. On the Mac mini's screen the same view shows the comets flowing <em>inward</em> — and an activity entry it can be proud of: "Stored 846 encrypted shards for Pahud's MacBook."</p>
+    <p><img src="/notes/first-mesh/overview.png" alt="Overview during a mesh backup: 61.9 GB spreading across 2 nodes" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>How the two Macs met</h2>
+    <p>No accounts, no server, no configuration. The Mac mini generated a single-use invite link; the MacBook pasted it. Under the hood: Bonjour finds the peer on the LAN, an HMAC proof shows possession of the invite secret without ever putting it on the wire, both sides derive directional traffic keys from an ECDH handshake bound to the full transcript, and every reconnection proves possession of those keys cryptographically before a single shard moves. The invite died the moment it was used.</p>
+    <p><img src="/notes/first-mesh/activity.png" alt="Activity stream while shards are encrypted and written across the mesh" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>What the Mac mini can see</h2>
+    <p>Everything it stores looks like this: <code>61b3a6aa….shard</code> — an opaque blob named by its own hash. No filenames, no folder structure, no contents, no way to tell one file from another. And since each chunk needs any 4 of its 6 shards to reconstruct, a single node's hoard reconstructs exactly nothing. The friend who stores your backup cannot read your backup. That was the promise; now it's a screenshot.</p>
+    <h2>Honest footnotes</h2>
+    <p>This is phase one: two Macs on the same network. Cross-network friends, adaptive shard geometry, and node-death recovery are next. And with two nodes the survivability report says, truthfully, that losing a node still hurts — the 4+2 math wants a third node before it can shrug off a machine. That report never flatters; it's the whole point.</p>
+    <div class="callout">Recilic 0.1.0 is on the <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a> at a founding price of <strong>$9.99</strong> — the mesh will ship as a free update, and the price goes up when it does. Early believers ride along.</div>
   </main>
   <footer>
     <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>

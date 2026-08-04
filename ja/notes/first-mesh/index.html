@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>最初のメッシュが動き出した · Recilic</title>
+  <meta name="description" content="2台の Mac、1つの暗号化メッシュ:今夜、Recilic のシャードが初めてネットワークを越えた——ペアリングハンドシェイク、ライブ転送、暗号文のみの保存。">
+  <meta property="og:title" content="最初のメッシュが動き出した">
+  <meta property="og:description" content="2台の Mac、1つの暗号化メッシュ:今夜、Recilic のシャードが初めてネットワークを越えた——ペアリングハンドシェイク、ライブ転送、暗号文のみの保存。">
+  <meta property="og:url" content="https://recilic.app/ja/notes/first-mesh/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-first-mesh.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-first-mesh.png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Hiragino Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/ja/"><img src="/icon.svg" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/ja/#features">機能</a>
+      <a href="/ja/#faq">FAQ</a>
+      <a class="active" href="/ja/notes/">ノート</a>
+      <span class="lang"><a href="/zh/notes/first-mesh/">中文</a>|<a class="active" href="/ja/notes/first-mesh/">日本語</a>|<a href="/ko/notes/first-mesh/">한국어</a>|<a href="/notes/first-mesh/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/ja/notes/">← ノート</a></p>
+    <h1>最初のメッシュが動き出した</h1>
+    <p class="meta">2026年8月 · Recilic 開発ノート</p>
+    <p class="lede">今夜、Recilic のシャードが初めて一台の Mac を離れ、別の一台に着地しました。MacBook と Mac mini、一本の招待リンク、そして 61.9 GB の写真ライブラリが暗号化シャードとなって部屋を流れていく。メッシュ——この製品が存在する理由そのもの——が今夜、最初の呼吸をしました。</p>
+    <p><img src="/notes/first-mesh/live-mesh.png" alt="Live mesh ビュー:この Mac が Mac mini へシャードをストリーミング、エッジにライブ転送レート" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>何が見えているのか</h2>
+    <p><strong>Live mesh</strong> ビュー:左の MacBook がバックアップ中、右の Mac mini が保存役。琥珀色のマーキーがデータの流れる方向へ走り、エッジにはライブレート。Mac mini の画面では同じビューの彗星が<em>内向き</em>に流れ、アクティビティには誇らしい一行が:「Stored 846 encrypted shards for Pahud's MacBook」。</p>
+    <p><img src="/notes/first-mesh/overview.png" alt="メッシュバックアップ中の Overview:61.9 GB が 2 ノードへ分散中" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>2台の Mac の出会い方</h2>
+    <p>アカウントなし、サーバーなし、設定なし。Mac mini が使い捨ての招待リンクを生成し、MacBook がそれを貼り付ける。水面下では:Bonjour が LAN 上で相手を見つけ、HMAC が招待シークレットの保有を(シークレット自体を電線に載せずに)証明し、双方が完全なトランスクリプトに束縛された ECDH ハンドシェイクから方向別の鍵を導出。以後の再接続はすべて、シャードが1つでも動く前にその鍵の保有を暗号学的に証明しなければなりません。招待リンクは使われた瞬間に死にます。</p>
+    <p><img src="/notes/first-mesh/activity.png" alt="シャードが暗号化されメッシュへ書き込まれる間のアクティビティ" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>Mac mini に見えるもの</h2>
+    <p>保存されるものはすべてこんな姿です:<code>61b3a6aa….shard</code>——自身のハッシュを名前にした不透明な blob。ファイル名も、フォルダ構造も、中身もなく、どのシャードがどのファイルのものかすら分かりません。各チャンクの再構築には 6 つのうち任意の 4 つが必要なので、単一ノードの持ち分から再構築できるものは、正確にゼロ。あなたのバックアップを預かる友人は、あなたのバックアップを読めない。それは約束でしたが、今はスクリーンショットです。</p>
+    <h2>正直な脚注</h2>
+    <p>これは第一段階:同一ネットワーク上の2台の Mac です。ネットワークを越えた友人、適応的なシャードジオメトリ、ノード死亡からの復旧はこれから。そして2ノードでは、生存性レポートは正直にこう言います:ノードを失えばまだ痛い——4+2 の数学が単一マシンの損失を平然と受け流すには、3台目が要る。このレポートは決してお世辞を言いません。それこそが存在意義です。</p>
+    <div class="callout">Recilic 0.1.0 は <a href="https://apps.apple.com/app/id6796820707">Mac App Store</a> でファウンディング価格 <strong>$9.99</strong>。メッシュは無料アップデートとして出荷され、その時に値上げします。早期の支持者はそのまま乗っていけます。</div>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:support@recilic.app">support@recilic.app</a></p>
+  </footer>
+</body>
+</html>
