@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>メッシュが沈黙し、何も告げなかった · Recilic</title>
+  <meta name="description" content="mDNSスレッドが全ノードで同時に死に、2日間バックアップが成功と報告し続けた。Recilic 0.3.0はその沈黙を検知し結果を伝えるようになりました。">
+  <meta property="og:title" content="メッシュが沈黙し、何も告げなかった">
+  <meta property="og:description" content="mDNSスレッドが全ノードで同時に死に、2日間バックアップが成功と報告し続けた。Recilic 0.3.0はその沈黙を検知し結果を伝えるようになりました。">
+  <meta property="og:url" content="https://recilic.app/ja/notes/mesh-went-quiet/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Hiragino Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/ja/"><img src="/icon.png" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/ja/#features">機能</a>
+      <a href="/ja/#faq">FAQ</a>
+      <a class="active" href="/ja/notes/">ノート</a>
+      <span class="lang"><a href="/zh/notes/mesh-went-quiet/">中文</a>|<a class="active" href="/ja/notes/mesh-went-quiet/">日本語</a>|<a href="/ko/notes/mesh-went-quiet/">한국어</a>|<a href="/notes/mesh-went-quiet/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/ja/notes/">← ノート</a></p>
+    <h1>メッシュが沈黙し、何も告げなかった</h1>
+    <p class="meta">2026年8月16日 · Recilic開発ノート</p>
+    <p class="lede">Recilic 0.3.0をリリースしました。暗号化されたシャードが、あなたが所有するMac群に5言語対応で分散されるようになりました。ここに至るまでに、メッシュが2日間6分の5の能力で動いていたこと——そしてその間のすべてのバックアップが成功と報告していたことに気づきました。</p>
+    <p><img src="/notes/mesh-went-quiet/live-mesh-eight-nodes.png" alt="Recilicのライブメッシュ表示：1台のMacBookが7台のストレージノードに接続されている" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>8台のマシン、そして6台に</h2>
+    <p>テストメッシュは8ノード構成です。このMacBook、Mac mini、そして家で使われずにいた6台の小型マシン。バックアップは各チャンクを4+2のシャードに分割し、6台の異なるノードに渡します。どの2台が消えてもデータは無傷です。</p>
+    <p>8月12日、同じ秒に、それらの小型ノードすべてが自身のアドバタイズを停止しました：</p>
+    <p><code>thread 'mDNS_daemon' panicked: index out of bounds:<br>the len is 278 but the index is 278</code></p>
+    <p>ネットワーク上の何か——プリンター、テレビ、わかりません——からの不正なパケットが1つ、ディスカバリーライブラリのパース処理のバグに到達し、すべてのノードで同時にそのスレッドを落としました。プロセスではなく、「ここにいます」と応答するスレッドだけが死にました。</p>
+    <p>そのため各ノードは接続を受け付け続けました。各ノードは自身のスーパーバイザーに正常と報告し続けました。そしてシャードの配置先を決定するアプリから見えなくなりました。その決定はディスカバリーで得られる情報に基づいているからです。6つの配置先のうち5つが2日間にわたってすべてのバックアップから静かに脱落し、それらのバックアップはすべて完了し、<em>成功</em>と報告しました。</p>
+    <h2>恥ずべき部分</h2>
+    <p>なぜ誰も気づかなかったのか、正確に述べる価値があります。シグナルが微弱だったからではありません。シグナルが存在しなかったからです。アプリは必要な情報をすべて持っていました——昨日は6ノードと言われ、今日は5ノードと言われた。それについて何の意見も持っていなかっただけです。</p>
+    <p>バックアップ製品の仕事は、後から信用されることです。「完了」は世界で最も報告しやすく、最も信用に値しないものです。</p>
+    <h2>兄弟バグ、コアを焼く</h2>
+    <p>小型ノードが沈黙している間、Mac miniのストレージノードはCPU 97%に張り付いていました——5日間、うち35時間はカーネル内で、何の仕事もしていませんでした。そのマシンには44のネットワークインターフェースがあります。実際に使われているものがいくつかと、蓄積された20のVPNトンネル、そしてAppleのピアツーピアインターフェース。ディスカバリーライブラリはそのすべてにソケットをバインドしました——マルチキャストポートに37個、Linuxマシンでは3個のところです——そしてそのソケットの1つがポーリングループを永遠に回し続けるのに十分でした。</p>
+    <p>どちらの不具合も、私たちが取り込んでいなかったバージョンでアップストリーム修正済みでした。最新リリースへの移行にコード変更は不要で、そのマシンのソケットは37から4に、CPUは97%からほぼゼロに下がりました。</p>
+    <h2>肩をすくめる代わりに出荷したもの</h2>
+    <p>依存関係のアップグレードは特定の事故を修正します。設計上の欠陥には何もしません。その欠陥とは、<em>何も監視していなかった</em>ことです。3つの対策を入れました：</p>
+    <p><strong>ノードが別れを告げるようになりました。</strong>ストレージノードは停止または再起動時、終了前にアドバタイズメントを取り下げます。Macから計測すると、ノードは最大1時間キャッシュに残る代わりに1.3秒でディスカバリーから消えます。強制終了されたノード——電源断、クラッシュ——は当然何も言えません。そのため次の対策もあります：</p>
+    <p><strong>Macは配置計画の前に確認します。</strong>バックアップが配置を確定する前に、すべての配置先を並行して直接チェックします。キャッシュされたディスカバリーレコードは、マシンがまだ存在する証拠とは見なされなくなりました。これは予想以上に重要でした。以前は、消えたノードが単にスキップされるのではなく——もう存在しないソケットに向けてシャードが送られ続けていたため——バックアップ全体が失敗していました。マシンの電源を切ると次のバックアップが壊れていたのです。</p>
+    <p><strong>そして結果を報告するようになりました。イベントではなく。</strong>バックアップが前回より少ないノードに到達した場合、Recilicはそう伝え、何が犠牲になったかを示します：</p>
+    <div class="callout">⚠︎ 6ノード中5に到達 — 許容ノード障害数が2から1に減少: p1</div>
+    <p>「ノードがオフラインです」では誰の役にも立ちません。データがまだ安全かどうかは別の問いであり、正確な答えがあります。5台のマシンに6シャードということは、1台が2つを持つので、その1台を失うとマージンなしで復元閾値ぎりぎりになります。それが表示すべき文です。ノードが単に別のノードに置き換わり耐障害性が変わらない場合は、劣化を騒がずにそう伝えます。</p>
+    <h2>修正のなかのバグ</h2>
+    <p>この警告の最初のバージョンは一度も発火しませんでした。ノードを停止し、バックアップは正しくそれを除外してシャードを別の場所に移動しましたが、サマリーは何も言いませんでした。</p>
+    <p>世代リポジトリはリストを新しい順に返し、コードはそのリストの末尾を「前回のバックアップ」として取得していました——このメッシュが存在する前の、最も古い世代を。その単一ノードは今日のノード群の部分集合です。そのためチェックは律儀に現在を時間の始まりと比較し、何も問題を見つけませんでした。すべてのユニットテストはパスしました。比較ロジックをテストしていたのであって、何と比較するかの選択をテストしていなかったからです。</p>
+    <p>正しい答えと見分けのつかない間違った答え。前の世代の選択はリポジトリに属するようになりました。自身のコミット順序を知っているのはリポジトリだけだからです。そしてそれをカバーするテストは、バグを再導入して失敗を確認することで検証しました——テストを信じる唯一の理由はそれです。</p>
+    <h2>まだ変わらないこと</h2>
+    <p>両方の修正は離陸前に起こります。バックアップ開始時に確かに存在し、進捗60%で消えたマシン——蓋を閉じた、電源タップを切った——は、5シャードで完了してそう報告する代わりに、その世代を失敗させます。データは無事です。コードは数学より厳格です。これは<a href="https://github.com/oablab/recilic/issues/16">issue 16</a>として記録してあり、次に取り組みます。</p>
+    <h2>0.3.0</h2>
+    <p>メッシュの改善に加えて：同一内容は1度だけ保存されるようになり、変更のないファイルの2回目のバックアップは何も転送せず、中断されたバックアップは着地済みのところから再開します。インターフェースは英語、繁体字中国語、簡体字中国語、日本語、韓国語に対応しました。また、EU全域での販売を開始しました。これには独自の事業者ステータス審査が必要でした。</p>
+    <p>リストア訓練は今もエンドツーエンドの全経路を通します——読み取り、デコード、復号、検証——なぜなら一度も復元したことのないバックアップは仮説だからです。</p>
+    <p><a href="https://apps.apple.com/app/id6796820707">Recilic — Mac App Store</a> · $9.99、サブスクリプションなし。</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:tautiu.dev@gmail.com">tautiu.dev@gmail.com</a></p>
+  </footer>
+</body>
+</html>

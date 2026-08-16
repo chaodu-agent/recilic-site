@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메시가 조용해졌는데 아무도 말하지 않았습니다 · Recilic</title>
+  <meta name="description" content="mDNS 스레드가 동시에 죽어 노드 5개가 이틀간 보이지 않았지만 백업은 계속 성공을 보고했습니다. Recilic 0.3.0의 수정 기록.">
+  <meta property="og:title" content="메시가 조용해졌는데 아무도 말하지 않았습니다">
+  <meta property="og:description" content="mDNS 스레드가 동시에 죽어 노드 5개가 이틀간 보이지 않았지만 백업은 계속 성공을 보고했습니다. Recilic 0.3.0의 수정 기록.">
+  <meta property="og:url" content="https://recilic.app/ko/notes/mesh-went-quiet/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/ko/"><img src="/icon.png" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/ko/#features">기능</a>
+      <a href="/ko/#faq">FAQ</a>
+      <a class="active" href="/ko/notes/">노트</a>
+      <span class="lang"><a href="/zh/notes/mesh-went-quiet/">中文</a>|<a href="/ja/notes/mesh-went-quiet/">日本語</a>|<a class="active" href="/ko/notes/mesh-went-quiet/">한국어</a>|<a href="/notes/mesh-went-quiet/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/ko/notes/">← 노트</a></p>
+    <h1>메시가 조용해졌는데 아무도 말하지 않았습니다</h1>
+    <p class="meta">2026년 8월 16일 · Recilic을 만들면서 남긴 기록</p>
+    <p class="lede">Recilic 0.3.0이 출시되었습니다. 암호화된 샤드가 이제 사용자가 소유한 Mac들에 걸쳐 분산되며, 다섯 개 언어를 지원합니다. 여기까지 오면서 메시가 이틀 동안 6분의 5 수준으로만 동작하고 있었다는 사실을 발견했습니다 — 그 사이의 모든 백업은 성공이라고 보고했는데도.</p>
+    <p><img src="/notes/mesh-went-quiet/live-mesh-eight-nodes.png" alt="Recilic의 라이브 메시 화면: MacBook 한 대가 7개의 스토리지 노드에 연결되어 있습니다" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>8대의 머신, 그리고 6대</h2>
+    <p>테스트 메시는 8개의 노드로 구성되어 있습니다: 이 MacBook, Mac mini 한 대, 그리고 집에서 놀고 있던 작은 머신 여섯 대. 백업은 각 청크를 4+2 샤드로 나누어 서로 다른 노드 여섯 곳에 전달하므로, 어떤 두 대가 사라져도 데이터는 온전합니다.</p>
+    <p>8월 12일, 같은 초에, 그 작은 노드들이 전부 자기 자신을 광고하는 것을 멈췄습니다:</p>
+    <p><code>thread 'mDNS_daemon' panicked: index out of bounds:<br>the len is 278 but the index is 278</code></p>
+    <p>네트워크 어딘가에 있는 무언가 — 프린터인지, TV인지, 누가 알겠습니까 — 가 보낸 잘못된 패킷 하나가 디스커버리 라이브러리의 파싱 버그를 건드렸고, 모든 노드의 해당 스레드를 동시에 죽였습니다. 프로세스 전체가 아닙니다. "나 여기 있어"라고 대답하는 스레드만.</p>
+    <p>그래서 각 노드는 연결을 계속 받아들였습니다. 각각 자체 수퍼바이저에게 정상이라고 보고했습니다. 하지만 샤드 배치를 결정하는 앱에게는 보이지 않게 되었습니다 — 그 결정은 발견할 수 있는 것에 기반하기 때문입니다. 6개 목적지 중 5개가 조용히 이틀간 모든 백업에서 빠졌고, 그 백업들은 전부 완료되었으며 <em>성공</em>이라고 말했습니다.</p>
+    <h2>부끄러워해야 할 부분</h2>
+    <p>아무도 눈치채지 못한 이유를 정확히 말할 필요가 있습니다. 신호가 미약해서가 아닙니다. 신호 자체가 없었기 때문입니다. 앱은 알아야 할 모든 것을 가지고 있었습니다 — 어제는 노드가 6개라고 들었고 오늘은 5개라고 들었는데, 그것에 대해 아무런 의견도 없었습니다.</p>
+    <p>백업 제품의 유일한 존재 이유는 나중에 믿을 수 있느냐입니다. "완료됨"은 보고하기 가장 쉬운 것이면서 가장 믿을 가치가 없는 것입니다.</p>
+    <h2>형제 버그, CPU 코어를 태우다</h2>
+    <p>작은 노드들이 침묵하는 동안, Mac mini의 스토리지 노드는 CPU 97%에 고정되어 있었습니다 — 5일 동안, 그중 35시간은 커널 내에서, 아무 일도 하지 않으면서. 그 머신은 네트워크 인터페이스가 44개 있습니다: 실제 사용하는 몇 개와, 누적된 VPN 터널 20개와, Apple의 피어 투 피어 인터페이스들. 디스커버리 라이브러리는 모든 인터페이스에 소켓을 바인딩했습니다 — Linux에서는 3개인데 여기서는 멀티캐스트 포트에만 37개 — 그리고 그 소켓 하나가 폴링 루프를 영원히 돌리기에 충분했습니다.</p>
+    <p>두 결함 모두 우리가 아직 반영하지 않은 상위 버전에서 수정되어 있었습니다. 최신 릴리스로 올리는 데 코드 변경이 필요 없었고, 그 머신의 소켓은 37개에서 4개로, CPU는 97%에서 무의미한 수준으로 떨어졌습니다.</p>
+    <h2>무심한 대응 대신 들어간 것</h2>
+    <p>의존성을 업그레이드하면 그 특정 사고는 수정됩니다. 하지만 설계 결함은 건드리지 않습니다 — <em>아무것도 감시하고 있지 않았다</em>는 것. 세 가지를 추가했습니다:</p>
+    <p><strong>노드가 이제 작별을 고합니다.</strong> 스토리지 노드가 중지되거나 재시작되면 종료 전에 자신의 광고를 철회합니다. Mac에서 측정한 결과: 노드가 디스커버리에서 사라지는 데 1.3초면 됩니다 — 캐시에 최대 한 시간까지 남아 있던 것과 비교하면. 완전히 죽은 노드 — 정전, 크래시 — 는 당연히 아무 말도 할 수 없으므로, 다음도 있습니다:</p>
+    <p><strong>Mac이 계획 전에 직접 확인합니다.</strong> 백업이 배치를 확정하기 전에 모든 목적지를 병렬로 직접 확인합니다. 캐시된 디스커버리 기록은 더 이상 그 머신이 아직 거기 있다는 증거로 받아들이지 않습니다. 이것은 예상보다 중요했습니다: 이전에는 사라진 노드가 그냥 건너뛰어지는 게 아니라 — 더 이상 존재하지 않는 소켓으로 여전히 샤드를 보내려 했기 때문에 전체 백업을 실패시켰습니다. 머신을 끄는 것 자체가 다음 백업을 깨뜨렸습니다.</p>
+    <p><strong>그리고 이제 이벤트가 아닌 결과를 보고합니다.</strong> 이전 백업보다 적은 노드에 도달하면, Recilic은 그렇게 말합니다 — 그리고 무엇을 잃었는지 말합니다:</p>
+    <div class="callout">⚠︎ 6개 노드 중 5개 도달 — 허용 가능한 노드 손실이 2에서 1로 감소: p1</div>
+    <p>"노드가 오프라인입니다"는 아무에게도 도움이 되지 않았을 것입니다. 데이터가 아직 안전한지는 다른 질문이며, 정확한 답이 있습니다: 5대의 머신에 걸쳐 6개의 샤드가 있다는 것은 한 대가 2개를 보유한다는 뜻이고, 그 한 대를 잃으면 여유 없이 정확히 복원 임계값에 놓인다는 뜻입니다. 그것이 출력할 가치가 있는 문장입니다. 노드가 단순히 다른 것으로 교체되어 허용 범위가 변하지 않았다면, 성능 저하라고 울지 않고 그렇다고 말합니다.</p>
+    <h2>수정 안의 버그</h2>
+    <p>그 경고의 첫 번째 버전은 한 번도 발동하지 않았습니다. 노드를 중지했고, 백업은 올바르게 그것을 제외하고 샤드를 다른 곳으로 옮겼으며, 요약은 아무 말도 하지 않았습니다.</p>
+    <p>세대 저장소는 목록을 최신순으로 반환하는데, 코드는 그 목록의 끝을 "이전 백업"으로 취급했습니다 — 이 메시가 존재하기 전의 가장 오래된 것, 단일 노드가 오늘의 부분집합인 그것. 그래서 비교는 성실하게 현재를 시간의 시작과 비교했고 아무 이상도 발견하지 못했습니다. 모든 단위 테스트가 통과했습니다 — 비교 자체를 테스트했지, 무엇과 비교할지의 선택을 테스트하지 않았으니까요.</p>
+    <p>맞는 답과 정확히 같아 보이는 틀린 답. 이전 세대를 선택하는 일은 이제 저장소에 속합니다 — 자기 자신의 커밋 순서를 아는 유일한 주체이므로 — 그리고 이를 검증하는 테스트는 버그를 다시 도입해서 실패하는 것을 확인하는 방식으로 검증했습니다 — 테스트를 믿을 이유가 되는 유일한 방법입니다.</p>
+    <h2>여전히 참인 것</h2>
+    <p>두 수정 모두 이륙 전에 일어납니다. 백업이 시작될 때 정말로 거기 있던 머신이 60% 진행 중에 사라지면 — 덮개를 닫거나, 멀티탭을 끄거나 — 그 세대는 여전히 실패합니다. 5개 샤드로 끝내고 괜찮다고 말하지 않습니다. 데이터는 무사합니다; 코드가 수학보다 엄격합니다. 이것은 <a href="https://github.com/oablab/recilic/issues/16">이슈 16</a>에 기록했고, 다음 작업입니다.</p>
+    <h2>0.3.0</h2>
+    <p>메시 외에도: 동일한 콘텐츠는 이제 한 번만 저장되므로, 변경되지 않은 파일의 두 번째 백업은 아무것도 전송하지 않으며 중단된 백업은 이미 도착한 지점부터 재개됩니다. 인터페이스는 영어, 정체자 중국어, 간체자 중국어, 일본어, 한국어를 지원합니다. 그리고 앱이 유럽연합 전역에서 판매되기 시작했는데, 이를 위해 별도의 사업자 자격 심사가 필요했습니다.</p>
+    <p>복원 훈련은 여전히 전체 경로를 처음부터 끝까지 실행합니다 — 읽기, 디코딩, 복호화, 검증 — 한 번도 복원해 본 적 없는 백업은 가설에 불과하기 때문입니다.</p>
+    <p><a href="https://apps.apple.com/app/id6796820707">Mac App Store의 Recilic</a> · $9.99, 구독 없음.</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:tautiu.dev@gmail.com">tautiu.dev@gmail.com</a></p>
+  </footer>
+</body>
+</html>

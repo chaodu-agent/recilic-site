@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The mesh went quiet, and nothing said so · Recilic</title>
+  <meta name="description" content="Every node's discovery thread died in the same second. Five of six destinations left every backup for two days — and every backup said success.">
+  <meta property="og:title" content="The mesh went quiet, and nothing said so">
+  <meta property="og:description" content="Every node's discovery thread died in the same second. Five of six destinations left every backup for two days — and every backup said success.">
+  <meta property="og:url" content="https://recilic.app/notes/mesh-went-quiet/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "New York", Georgia, "Times New Roman", serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "New York", Georgia, "Times New Roman", serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/"><img src="/icon.png" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/#features">Features</a>
+      <a href="/#faq">FAQ</a>
+      <a class="active" href="/notes/">Notes</a>
+      <span class="lang"><a href="/zh/notes/mesh-went-quiet/">中文</a>|<a href="/ja/notes/mesh-went-quiet/">日本語</a>|<a href="/ko/notes/mesh-went-quiet/">한국어</a>|<a class="active" href="/notes/mesh-went-quiet/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/notes/">← Notes</a></p>
+    <h1>The mesh went quiet, and nothing said so</h1>
+    <p class="meta">August 16, 2026 · Notes from building Recilic</p>
+    <p class="lede">Recilic 0.3.0 is out: your encrypted shards now spread across the Macs you own, in five languages. Getting there meant finding out that the mesh had been running at five-sixths strength for two days — and that every backup in between had reported success.</p>
+    <p><img src="/notes/mesh-went-quiet/live-mesh-eight-nodes.png" alt="Recilic's live mesh view: one MacBook connected to seven storage nodes" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>Eight machines, and then six</h2>
+    <p>The test mesh is eight nodes: this MacBook, a Mac mini, and six small machines that had been sitting idle in the house. A backup splits each chunk into 4+2 shards and hands them to six different nodes, so any two can vanish and the data is still whole.</p>
+    <p>On 12 August, at the same second, every one of those small nodes stopped advertising itself:</p>
+    <p><code>thread 'mDNS_daemon' panicked: index out of bounds:<br>the len is 278 but the index is 278</code></p>
+    <p>One malformed packet from something on the network — a printer, a TV, who knows — walked into a parsing bug in the discovery library and took out that thread on every node simultaneously. Not the process. Just the thread that answers "I'm here."</p>
+    <p>So each node kept accepting connections. Each one kept reporting itself healthy to its own supervisor. And each one became invisible to the app that decides where shards go, because that decision is made from what it can discover. Five of six destinations quietly dropped out of every backup for two days, and every one of those backups finished and said <em>success</em>.</p>
+    <h2>The part that should be embarrassing</h2>
+    <p>It is worth being precise about why nobody noticed. Not because the signal was subtle: because there was no signal. The app had everything it needed to know — it had just been told six nodes yesterday and five today, and it had no opinion about that.</p>
+    <p>A backup product's whole job is to be believed later. "Finished" is the easiest thing in the world to report and the least worth trusting.</p>
+    <h2>The sibling bug, burning a core</h2>
+    <p>While the small nodes were silent, the storage node on the Mac mini was pinned at 97% CPU — for five days, thirty-five hours of it inside the kernel, doing no work at all. That machine has forty-four network interfaces: a few real ones, plus twenty accumulated VPN tunnels and Apple's peer-to-peer interfaces. The discovery library bound a socket to every single one — thirty-seven of them on the multicast port, against three on a Linux box — and one of those sockets was enough to spin its polling loop forever.</p>
+    <p>Both faults were fixed upstream in versions we hadn't taken. Moving to the current release needed no code changes and dropped that machine from thirty-seven sockets to four, and from 97% CPU to nothing.</p>
+    <h2>What shipped instead of a shrug</h2>
+    <p>Upgrading a dependency fixes the specific accident. It does nothing about the design fault, which was that <em>nothing was watching</em>. Three things went in:</p>
+    <p><strong>Nodes now say goodbye.</strong> A storage node that is stopped or restarted withdraws its advertisement before exiting. Measured from the Mac: the node disappears from discovery in 1.3 seconds instead of lingering in a cache for up to an hour. A node that is killed outright — power cut, crash — obviously cannot say anything, which is why there is also:</p>
+    <p><strong>The Mac asks before it plans.</strong> Every destination is checked directly, in parallel, before a backup commits to a placement. A cached discovery record is no longer taken as proof that a machine is still there. This mattered more than expected: before it, a node that had gone away didn't just get skipped — it failed the entire backup, because shards were still being addressed to a socket that no longer existed. Turning a machine off used to break the next backup.</p>
+    <p><strong>And it now reports consequences, not events.</strong> When a backup reaches fewer nodes than the one before it, Recilic says so — and says what it cost:</p>
+    <div class="callout">⚠︎ reached 5 of 6 nodes — survivable node losses fell from 2 to 1: p1</div>
+    <p>"A node is offline" would not have helped anyone. Whether your data is still safe is a different question, and it has an exact answer: six shards across five machines means one of them holds two, so losing that one leaves you at exactly the restore threshold with no margin. That is the sentence worth printing. When a node is merely swapped for another and the tolerance is unchanged, it says so without crying degradation.</p>
+    <h2>The bug in the fix</h2>
+    <p>The first version of that warning never fired. A node was stopped, the backup correctly excluded it and moved its shards elsewhere, and the summary said nothing at all.</p>
+    <p>The generation repository hands back its list newest-first, and the code took the end of that list as "the previous backup" — the oldest one, from before this mesh existed, whose single node is a subset of today's. So the check dutifully compared the present against the beginning of time and found nothing wrong. Every unit test passed, because they tested the comparison rather than the choice of what to compare against.</p>
+    <p>A wrong answer that looks exactly like a right one. Choosing the predecessor now belongs to the repository, which is the only thing that knows its own commit order, and the test that covers it was checked by reinstating the bug to watch it fail — which is the only reason to believe a test at all.</p>
+    <h2>What is still true</h2>
+    <p>Both fixes happen before takeoff. A machine that was genuinely there when the backup started and disappears at 60% — a lid closing, a power strip switched off — still fails that generation instead of finishing with five shards and telling you so. The data is fine; the code is stricter than the mathematics. That one is written down as <a href="https://github.com/oablab/recilic/issues/16">issue 16</a> and is next.</p>
+    <h2>0.3.0</h2>
+    <p>Alongside the mesh: identical content is now stored once, so a second backup of unchanged files transfers nothing and an interrupted backup resumes from what already landed. The interface is in English, Traditional Chinese, Simplified Chinese, Japanese and Korean. And the app is now on sale across the European Union, which took a trader-status review of its own.</p>
+    <p>Restore drills still run the whole path end to end — read, decode, decrypt, verify — because a backup you have never restored is a hypothesis.</p>
+    <p><a href="https://apps.apple.com/app/id6796820707">Recilic on the Mac App Store</a> · $9.99, no subscription.</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:tautiu.dev@gmail.com">tautiu.dev@gmail.com</a></p>
+  </footer>
+</body>
+</html>

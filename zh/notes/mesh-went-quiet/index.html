@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>網格靜默了，而沒有任何東西說出口 · Recilic</title>
+  <meta name="description" content="網格上的探索執行緒同時死亡，五個節點從備份中消失兩天，而每次備份都回報成功。Recilic 0.3.0 修復了它並加入了後果通知。">
+  <meta property="og:title" content="網格靜默了，而沒有任何東西說出口">
+  <meta property="og:description" content="網格上的探索執行緒同時死亡，五個節點從備份中消失兩天，而每次備份都回報成功。Recilic 0.3.0 修復了它並加入了後果通知。">
+  <meta property="og:url" content="https://recilic.app/zh/notes/mesh-went-quiet/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://recilic.app/og-card-mesh-went-quiet.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    :root {
+      --accent: #3EA576; --accent-deep: #1E5C44; --accent-tint: #D9EEE3;
+      --ink: #1E3A2E; --muted: #5B7268; --bg: #EFF6F2; --card: #E4EFE8;
+      --border: rgba(30, 92, 68, 0.16);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #3EA576; --accent-deep: #7FD4AC; --accent-tint: #1C3229;
+        --ink: #DCEFE4; --muted: #8AAF9C; --bg: #0E1B15; --card: #16281F;
+        --border: rgba(62, 165, 118, 0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem;
+    }
+    nav .brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+    nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    nav .links a { color: var(--muted); text-decoration: none; margin-left: 1.4rem; font-size: 0.92rem; }
+    nav .links a:hover { color: var(--accent-deep); }
+    nav .links a.active { color: var(--ink); font-weight: 600; }
+    nav .lang { margin-left: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+    nav .lang a { margin: 0 0.15rem; text-decoration: none; color: var(--muted); }
+    nav .lang a.active { color: var(--ink); font-weight: 700; }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; gap: 0.45rem; }
+      nav .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 1rem; }
+      nav .links a { margin-left: 0; }
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .crumb { font-size: 0.88rem; margin-bottom: 2rem; }
+    .crumb a { color: var(--accent-deep); text-decoration: none; }
+    h1 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 2.1rem; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.4rem; }
+    h2 { font-family: "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.4rem; letter-spacing: -0.01em; margin: 2.6rem 0 0.8rem; }
+    main p { margin-bottom: 1.1rem; }
+    main p strong { color: var(--ink); }
+    main a { color: var(--accent-deep); }
+    main em { font-style: italic; }
+    .lede { font-size: 1.08rem; color: var(--muted); }
+    .callout {
+      background: var(--accent-tint); border-radius: 14px; padding: 1.1rem 1.4rem;
+      margin: 1.6rem 0; font-size: 0.98rem;
+    }
+    .note-item {
+      display: block; background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+      text-decoration: none; color: var(--ink);
+    }
+    .note-item:hover { border-color: var(--accent); }
+    .note-item .date { color: var(--muted); font-size: 0.85rem; }
+    .note-item h3 { font-size: 1.12rem; margin: 0.2rem 0 0.35rem; }
+    .note-item p { color: var(--muted); font-size: 0.94rem; margin: 0; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: var(--accent-deep); text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/zh/"><img src="/icon.png" alt="" width="28" height="28">Recilic</a>
+    <div class="links">
+      <a href="/zh/#features">功能特色</a>
+      <a href="/zh/#faq">常見問題</a>
+      <a class="active" href="/zh/notes/">筆記</a>
+      <span class="lang"><a class="active" href="/zh/notes/mesh-went-quiet/">中文</a>|<a href="/ja/notes/mesh-went-quiet/">日本語</a>|<a href="/ko/notes/mesh-went-quiet/">한국어</a>|<a href="/notes/mesh-went-quiet/">EN</a></span>
+    </div>
+  </nav>
+  <main>
+    <p class="crumb"><a href="/zh/notes/">← 筆記</a></p>
+    <h1>網格靜默了，而沒有任何東西說出口</h1>
+    <p class="meta">2026 年 8 月 16 日 · 打造 Recilic 的筆記</p>
+    <p class="lede">Recilic 0.3.0 已經發佈：你的加密分片現在可以散佈在你擁有的 Mac 之間，支援五種語言。走到這一步的過程中，我們發現網格已經以六分之五的能力運作了兩天——而這段期間的每一次備份都回報了成功。</p>
+    <p><img src="/notes/mesh-went-quiet/live-mesh-eight-nodes.png" alt="Recilic 的即時網格檢視：一台 MacBook 連接到七個儲存節點" style="width:100%;border-radius:14px;border:1px solid var(--border)"></p>
+    <h2>八台機器，然後剩六台</h2>
+    <p>測試用的網格有八個節點：這台 MacBook、一台 Mac mini，以及六台原本閒置在家裡的小機器。備份時，每個區塊會被分成 4+2 個分片，分發到六個不同的節點，因此任何兩台消失，資料仍然完整。</p>
+    <p>8 月 12 日，在同一秒鐘，所有那些小節點停止了自我廣播：</p>
+    <p><code>thread 'mDNS_daemon' panicked: index out of bounds:<br>the len is 278 but the index is 278</code></p>
+    <p>網路上某個裝置發出的一個格式錯誤的封包——可能是印表機、電視，誰知道——觸發了探索程式庫中的解析臭蟲，同時在每個節點上終結了那個執行緒。不是整個程序，只是回答「我在這裡」的那個執行緒。</p>
+    <p>於是每個節點繼續接受連線。每個節點繼續向自己的監控程式回報正常。而每個節點對決定分片去向的 app 而言都變成了隱形，因為那個決定是根據它能探索到什麼來做的。六個目的地中有五個悄悄地從此後每次備份中消失了兩天，而那些備份每一次都完成並說<em>成功</em>。</p>
+    <h2>本該令人難堪的部分</h2>
+    <p>值得精確說明為什麼沒有人注意到。不是因為訊號微弱：而是因為根本沒有訊號。App 擁有它需要知道的一切——昨天它還看到六個節點，今天只有五個，而它對此沒有任何看法。</p>
+    <p>備份軟體的全部工作就是讓人日後相信它。「已完成」是世界上最容易回報的東西，也是最不值得信任的。</p>
+    <h2>姊妹臭蟲，燃燒一個核心</h2>
+    <p>在小節點沉默的同時，Mac mini 上的儲存節點 CPU 被釘在 97%——持續了五天，其中三十五小時花在核心裡面，什麼事也沒做。那台機器有四十四個網路介面：幾個真實的，加上二十個累積的 VPN 通道和 Apple 的點對點介面。探索程式庫對每一個介面都綁定了一個 socket——其中三十七個在多播埠上，相比 Linux 機器上只有三個——而其中一個 socket 就足以讓它的輪詢迴圈永遠旋轉下去。</p>
+    <p>這兩個錯誤都已在上游版本中修復，只是我們還沒更新。升級到目前的版本不需要改動任何程式碼，讓那台機器的 socket 從三十七個降到四個，CPU 從 97% 降到幾乎為零。</p>
+    <h2>發佈的不是聳肩</h2>
+    <p>升級相依套件修復了這個特定的事故。但它對設計缺陷毫無幫助，那個缺陷就是<em>沒有任何東西在監看</em>。三件事被加了進去：</p>
+    <p><strong>節點現在會道別。</strong>一個被停止或重啟的儲存節點在結束前會撤回它的廣播。從 Mac 端測量：節點從探索中消失的時間是 1.3 秒，而不是在快取中停留長達一小時。一個被強制終止的節點——斷電、崩潰——顯然無法說任何東西，這就是為什麼還有：</p>
+    <p><strong>Mac 在規劃前會先確認。</strong>每個目的地在備份決定佈局之前，都會被直接、平行地檢查。快取的探索記錄不再被當作一台機器仍在那裡的證據。這比預期更重要：在此之前，一個已經離開的節點不只是被跳過——它會讓整個備份失敗，因為分片仍然被寄往一個已經不存在的 socket。以前關掉一台機器就會中斷下一次備份。</p>
+    <p><strong>而且它現在報告的是後果，不是事件。</strong>當一次備份能連到的節點比上一次少時，Recilic 會告訴你——並且告訴你代價是什麼：</p>
+    <div class="callout">⚠︎ 已到達 5/6 個節點 — 可承受的節點遺失數從 2 降至 1：p1</div>
+    <p>「一個節點離線了」不會幫到任何人。你的資料是否仍然安全是另一個問題，而且有精確的答案：六個分片分佈在五台機器上，表示其中一台持有兩個分片，因此失去那一台就會讓你恰好處在還原門檻，沒有餘裕。這才是值得印出來的那句話。當一個節點只是被另一個替換而容忍度不變時，它會如實告知，而不會大喊降級。</p>
+    <h2>修復裡的臭蟲</h2>
+    <p>那個警告的第一個版本從未觸發過。一個節點被停止，備份正確地排除了它並將其分片移到別處，而摘要什麼都沒說。</p>
+    <p>世代儲存庫以最新優先的順序回傳列表，而程式碼取了列表的末尾作為「上一次備份」——也就是最舊的那個，來自這個網格存在之前，其單一節點是今天的子集。於是檢查盡責地將現在與時間起點做比較，發現沒有問題。每個單元測試都通過了，因為它們測的是比較邏輯而不是比較對象的選擇。</p>
+    <p>一個看起來跟正確答案一模一樣的錯誤答案。選擇前一代現在屬於儲存庫的職責，因為只有它知道自己的提交順序，而覆蓋這個邏輯的測試是透過重新引入臭蟲並看著它失敗來驗證的——這是相信一個測試的唯一理由。</p>
+    <h2>仍然成立的事</h2>
+    <p>這兩個修復都發生在起飛之前。一台在備份開始時確實在場、卻在進行到 60% 時消失的機器——螢幕蓋上、電源排插關掉——仍然會讓那個世代失敗，而不是用五個分片完成然後告訴你。資料是安全的；程式碼比數學更嚴格。這個問題已記錄為 <a href="https://github.com/oablab/recilic/issues/16">issue 16</a>，是下一步。</p>
+    <h2>0.3.0</h2>
+    <p>除了網格的改進：相同的內容現在只儲存一次，因此對未變更檔案的第二次備份不會傳輸任何東西，而被中斷的備份會從已經傳完的部分繼續。介面支援英文、繁體中文、簡體中文、日文和韓文。App 現在也在整個歐盟銷售，這需要通過它自己的商家身份審查。</p>
+    <p>還原演練仍然走完整個流程——讀取、解碼、解密、驗證——因為一個你從未還原過的備份只是一個假說。</p>
+    <p><a href="https://apps.apple.com/app/id6796820707">Recilic，Mac App Store</a> · $9.99，無訂閱制。</p>
+  </main>
+  <footer>
+    <p>© 2026 Recilic · <a href="/privacy/">Privacy</a> · <a href="mailto:tautiu.dev@gmail.com">tautiu.dev@gmail.com</a></p>
+  </footer>
+</body>
+</html>
