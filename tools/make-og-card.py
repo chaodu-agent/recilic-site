@@ -30,6 +30,10 @@ HIRA_GB = "/System/Library/Fonts/Hiragino Sans GB.ttc"   # W6 covers Traditional
 SDGOTHIC = "/System/Library/Fonts/AppleSDGothicNeo.ttc"
 
 
+SITE = "/Users/pahud/repo/recilic-site"
+LOGO = Image.open(f"{SITE}/logo-512.png").convert("RGBA").resize((84, 84), Image.LANCZOS)
+
+
 def F(path, size, index=0):
     return ImageFont.truetype(path, size, index=index)
 
@@ -75,15 +79,6 @@ def gradient(img):
                fill=tuple(round(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOT)))
 
 
-def mark(d, cx, cy, r=26):
-    for angle in (90, 210, 330):
-        x = cx + r * math.cos(math.radians(angle))
-        y = cy - r * math.sin(math.radians(angle))
-        d.line([(cx, cy), (x, y)], fill=ACCENT, width=5)
-        d.ellipse([x - 11, y - 11, x + 11, y + 11], fill=ACCENT)
-    d.ellipse([cx - 13, cy - 13, cx + 13, cy + 13], fill=INK)
-
-
 def ghost_mesh(d):
     """The spoke mesh, oversized and low-contrast, bleeding off the right edge."""
     hub = (940, 330)
@@ -120,8 +115,8 @@ for lang, spec in LOCALES.items():
 
     ghost_mesh(d)
 
-    mark(d, 104, 92)
-    d.text((146, 62), "Recilic", font=F(HELV, 46, 1), fill=INK)
+    img.paste(LOGO, (72, 52), LOGO)
+    d.text((176, 62), "Recilic", font=F(HELV, 46, 1), fill=INK)
 
     # Headline: two or three lines, top-aligned so the stat row stays put.
     y = 176 if len(spec['headline']) == 3 else 190
